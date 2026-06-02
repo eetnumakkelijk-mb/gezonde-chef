@@ -80,7 +80,8 @@ else:
                             {"role": "user", "content": prompt}
                         ]
                     )
-                    recept = response.choices.message.content
+                    recept = response.choices[0].message.content
+
                     st.success("Smakelijk eten! Hier is je persoonlijke en gezonde recept:")
                     st.markdown(recept)
                     
