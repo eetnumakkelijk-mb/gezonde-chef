@@ -24,7 +24,7 @@ st.markdown("### 1. Voer je ingrediënten in")
 ingredienten = st.text_area(
     "Typ alle ingrediënten die je wilt gebruiken, gescheiden door een komma:",
     placeholder="Bijv. kip, broccoli, rijst, eieren, oude kaas, ui, tomaat",
-    help="Je kunt zoveel ingrediënten invullen als je zelf wilt! Hoe more je invult, hoe beter het recept."
+    help="Je kunt zoveel ingrediënten invullen als je zelf wilt! Hoe meer je invult, hoe beter het recept."
 )
 
 st.markdown("### 2. Extra wensen (Optioneel)")
@@ -35,7 +35,7 @@ extra_wensen = st.text_input(
 
 st.markdown("---")
 
-# Haal de sleutel onzichtbaar op uit de Streamlit Secrets (Stap 2)
+# Haal de sleutel onzichtbaar op uit de Streamlit Secrets
 api_key = st.secrets["OPENAI_API_KEY"]
 
 # BETAALMUUR LOGICA
@@ -49,9 +49,8 @@ if st.session_state.teller >= 2 and not st.session_state.is_premium:
     * ❌ Geen limieten meer: voorkom voedselverspilling én eet elke dag gezond!
     """)
     
-    # Plak hier je eigen Stripe link tussen de aanhalingstekens
+    # Tijdelijke link. Zodra Stripe geverifieerd is, vervang je dit door je ://stripe.com link!
     st.link_button("💳 Ontgrendel Pro voor €2,99", "https://stripe.com")
-
     
     st.markdown("---")
     if st.button("Simuleer Succesvolle Betaling (Admin Test Knop)"):
@@ -80,10 +79,12 @@ else:
                             {"role": "user", "content": prompt}
                         ]
                     )
-                    recept = response.choices.pop(0).message.content
-
-
-
+                    
+                    # DE PERFECTE EN VEILIGE MANIER OM HET RECEPT OP TE HALEN:
+                    choices_list = response.choices
+                    first_choice = choices_list[0]
+                    recept = first_choice.message.content
+                    
                     st.success("Smakelijk eten! Hier is je persoonlijke en gezonde recept:")
                     st.markdown(recept)
                     
