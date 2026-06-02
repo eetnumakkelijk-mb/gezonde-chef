@@ -50,7 +50,8 @@ if st.session_state.teller >= 2 and not st.session_state.is_premium:
     """)
     
     # Plak hier je eigen Stripe link tussen de aanhalingstekens
-    st.link_button("💳, "https://stripe.com")
+    st.link_button("💳 Ontgrendel Pro voor €2,99", "https://stripe.com")
+
     
     st.markdown("---")
     if st.button("Simuleer Succesvolle Betaling (Admin Test Knop)"):
