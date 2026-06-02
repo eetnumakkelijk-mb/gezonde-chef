@@ -3,7 +3,7 @@ from openai import OpenAI
 st.set_page_config(page_title="Gezonde Restjes Chef Pro", layout="centered")  
 if "teller" not in st.session_state: st.session_state.teller = 0  
 if "is_premium" not in st.session_state: st.session_state.is_premium = False  
-st.title("?? Gezonde Restjes Chef")  
+st.title("🧑‍🍳 Gezonde Restjes Chef")  
 st.subheader("Voer je restjes in!")  
 if not st.session_state.is_premium: st.info(f"Je hebt nog {max(0, 2 - st.session_state.teller)} gratis credits.")  
 else: st.success("Pro Status: Actief")  
@@ -17,7 +17,7 @@ if st.session_state.teller  and not st.session_state.is_premium:
         st.session_state.is_premium = True  
         st.rerun()  
 else:  
-    if st.button("Genereer Mijn Gezonde Recept"):  
+    if st.button("🥦Genereer Mijn Gezonde Recept"):  
         if not ingredienten: st.warning("Vul eerst je ingredienten in!")  
         else:  
             with st.spinner("De chef denkt na..."):  
