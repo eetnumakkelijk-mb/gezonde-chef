@@ -15,9 +15,6 @@ st.info(f"❤️ **Maandelijkse Donatie Oproep ({huidige_maand}):**  \n"
         "vraag ik gebruikers om één keer per maand een vrijblijvende donatie te doen ter waarde van een kopje koffie. "
         "Super bedankt voor je steun! 🙏")
 
-# Hier kun je later eventueel een Tikkie- of PayPal-link plaatsen als je dat wilt
-# st.link_button("☕ Doe een vrijblijvende donatie (PayPal / Tikkie)", "https://paypal.me")
-
 st.markdown("---")
 
 # INGREDIËNTEN INVOER
@@ -36,7 +33,7 @@ extra_wensen = st.text_input(
 
 st.markdown("---")
 
-# DE GENERATOR KNOP (Blijft altijd onbeperkt werken!)
+# DE GENERATOR KNOP
 if st.button("Genereer Mijn Gezonde Recept 🥦"):
     if not ingredienten:
         st.warning("Vul eerst je ingrediënten in! Voeg meerdere producten toe gescheiden door een komma.")
@@ -62,10 +59,8 @@ if st.button("Genereer Mijn Gezonde Recept 🥦"):
                     ]
                 )
                 
-                # Veilige manier om het recept te tonen
-                choices_list = response.choices
-                first_choice = choices_list
-                recept = first_choice.message.content
+                # DE CRUCIALE REPARATIE HIER (met de pop-functie zodat het chatvenster niks filtert):
+                recept = response.choices.pop(0).message.content
                 
                 st.success("Smakelijk eten! Hier is je persoonlijke en gezonde recept:")
                 st.markdown(recept)
