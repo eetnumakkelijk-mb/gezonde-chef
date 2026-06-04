@@ -1,2 +1,9 @@
 openai
 streamlit
+[theme]
+primaryColor = "#4a7c59"
+backgroundColor = "#f7f9f6"
+secondaryBackgroundColor = "#e8f0ea"
+textColor = "#2c4c38"
+font = "sans serif"
+
