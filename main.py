@@ -2,10 +2,43 @@ import streamlit as st
 from openai import OpenAI
 from datetime import datetime
 
+# 1. WARME KLAREN EN STYLING INBOUWEN
 st.set_page_config(page_title="Gezonde Restjes Chef", layout="centered")
 
-st.title("🥗 Gezonde Restjes Chef")
-st.subheader("Voer je restjes in en de AI-Chef bedenkt een super gezond recept!")
+# Custom CSS voor een warme, culinaire sfeer (Zachtgroen/crème tinten)
+st.markdown("""
+    <style>
+        /* Achtergrond van de hele app warm maken */
+        .stApp {
+            background-color: #f7f9f6;
+        }
+        /* Alle grote titels een diepe, warme groen/bruine kleur geven */
+        h1, h2, h3 {
+            color: #2c4c38 !important;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+        /* Tekstvakken een zachte rand geven */
+        .stTextArea textarea, .stTextInput input {
+            border: 1px solid #c2d1c6 !important;
+            background-color: #ffffff !important;
+        }
+    </style>
+""", unsafe_with_html=True)
+
+# 2. SFEERVOLLE HEADER
+st.title("🧑‍🍳 Gezonde Restjes Chef")
+
+# We plaatsen de introductie in een warme, gezellige welkomstkaart
+st.markdown("""
+    <div style="background-color: #e8f0ea; padding: 20px; border-radius: 12px; margin-bottom: 25px; border-left: 5px solid #4a7c59;">
+        <h4 style="margin-0; color: #2c4c38; font-weight: bold;">Welkom in de keuken! 👋</h4>
+        <p style="margin: 5px 0 0 0; color: #3d5a45; font-size: 15px;">
+            Gooi die lekkere restjes uit je koelkast niet weg! Typ hieronder in wat je nog hebt liggen. 
+            Mijn slimme AI-Chef bedenkt speciaal voor jou een super gezond, voedzaam en logisch recept. 
+            Samen gaan we voedselverspilling tegen én eten we heerlijk gezond!
+        </p>
+    </div>
+""", unsafe_with_html=True)
 
 # INITIALISATIE: We tellen het aantal gegenereerde recepten
 if "teller" not in st.session_state:
@@ -23,9 +56,7 @@ if st.session_state.teller >= 5 and st.session_state.donatie_gesloten_maand != h
             "een vrijblijvende donatie te doen om deze app gratis en zonder reclame online te houden. "
             "Kies hieronder een bedrag dat bij je past. Super bedankt voor je steun! 🙏")
     
-    # Drie knoppen netjes naast elkaar met de verschillende bedragen
     col1, col2, col3 = st.columns(3)
-    
     with col1:
         st.link_button("☕ Doneer € 1,50", "https://buymeacoffee.com")
     with col2:
@@ -33,7 +64,7 @@ if st.session_state.teller >= 5 and st.session_state.donatie_gesloten_maand != h
     with col3:
         st.link_button("👑 Doneer € 3,00", "https://buymeacoffee.com")
     
-    st.markdown(" ") # Extra witruimte
+    st.markdown(" ") 
     if st.button("❌ Gelezen, sluit melding voor deze maand"):
         st.session_state.donatie_gesloten_maand = huidige_maand
         st.rerun()
@@ -41,14 +72,14 @@ if st.session_state.teller >= 5 and st.session_state.donatie_gesloten_maand != h
 st.markdown("---")
 
 # INGREDIËNTEN INVOER
-st.markdown("### 1. Voer je ingrediënten in")
+st.markdown("### 🥑 1. Wat ligt er nog in je koelkast?")
 ingredienten = st.text_area(
     "Typ alle ingrediënten die je wilt gebruiken, gescheiden door een komma:",
-    placeholder="Bijv. kip, broccoli, rijst, eieren, oude kaas, ui, tomaat",
-    help="Je kunt zoveel ingrediënten invullen als je zelf wilt! Hoe meer je invult, hoe beter het recept."
+    placeholder="Bijv. kip, broccoli, rijst, eieren, tomaat, ui...",
+    help="Je kunt zoveel ingrediënten invullen als je zelf wilt!"
 )
 
-st.markdown("### 2. Extra wensen (Optioneel)")
+st.markdown("### 📝 2. Extra wensen (Optioneel)")
 extra_wensen = st.text_input(
     "Heb je specifieke voorkeuren?", 
     placeholder="Bijv. binnen 15 minuten, vegetarisch, koolhydraatarm, extra eiwit"
@@ -56,12 +87,12 @@ extra_wensen = st.text_input(
 
 st.markdown("---")
 
-# DE GENERATOR KNOP (Blijft altijd onbeperkt werken!)
-if st.button("Genereer Mijn Gezonde Recept 🥦"):
+# DE GENERATOR KNOP
+if st.button("🧑‍🍳 Bedenk Mijn Gezonde Recept!"):
     if not ingredienten:
         st.warning("Vul eerst je ingrediënten in! Voeg meerdere producten toe gescheiden door een komma.")
     else:
-        with st.spinner("De chef-kok berekent de meest gezonde combinatie... 🧑‍🍳"):
+        with st.spinner("De chef-kok berekent de meest gezonde combinatie... 🍲"):
             try:
                 api_key = st.secrets["OPENAI_API_KEY"]
                 client = OpenAI(api_key=api_key)
