@@ -2,7 +2,7 @@ import streamlit as st
 from openai import OpenAI
 from datetime import datetime
 
-# 1. WARME KLAREN EN STYLING INBOUWEN
+# 1. WARME KLEUREN EN STYLING INBOUWEN
 st.set_page_config(page_title="Gezonde Restjes Chef", layout="centered")
 
 # Custom CSS voor een warme, culinaire sfeer (Zachtgroen/crème tinten)
@@ -31,7 +31,7 @@ st.title("🧑‍🍳 Gezonde Restjes Chef")
 # We plaatsen de introductie in een warme, gezellige welkomstkaart
 st.markdown("""
     <div style="background-color: #e8f0ea; padding: 20px; border-radius: 12px; margin-bottom: 25px; border-left: 5px solid #4a7c59;">
-        <h4 style="margin-0; color: #2c4c38; font-weight: bold;">Welkom in de keuken! 👋</h4>
+        <h4 style="margin: 0; color: #2c4c38; font-weight: bold;">Welkom in de keuken! 👋</h4>
         <p style="margin: 5px 0 0 0; color: #3d5a45; font-size: 15px;">
             Gooi die lekkere restjes uit je koelkast niet weg! Typ hieronder in wat je nog hebt liggen. 
             Mijn slimme AI-Chef bedenkt speciaal voor jou een super gezond, voedzaam en logisch recept. 
@@ -87,7 +87,7 @@ extra_wensen = st.text_input(
 
 st.markdown("---")
 
-# DE GENERATOR KNOP
+# DE GENERATOR KNOP (Blijft altijd onbeperkt werken!)
 if st.button("🧑‍🍳 Bedenk Mijn Gezonde Recept!"):
     if not ingredienten:
         st.warning("Vul eerst je ingrediënten in! Voeg meerdere producten toe gescheiden door een komma.")
@@ -102,7 +102,7 @@ if st.button("🧑‍🍳 Bedenk Mijn Gezonde Recept!"):
                     f"Extra wensen van de gebruiker: {extra_wensen}. "
                     f"Geef het recept een duidelijke titel, bereidingstijd, ingrediëntenlijst met hoeveelheden en een stappenplan. "
                     f"Belangrijk: Voeg aan het begin een korte alinea toe met de titel 'Waarom dit gerecht super gezond is:' "
-                    f"waarin je specifiek benadrukt waarom deze combinatie heel voedzaam og gezond is voor het lichaam."
+                    f"waarin je specifiek benadrukt waarom deze combinatie heel voedzaam en gezond is voor het lichaam."
                 )
                 response = client.chat.completions.create(
                     model="gpt-4o-mini",
