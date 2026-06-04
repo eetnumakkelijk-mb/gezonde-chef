@@ -7,13 +7,36 @@ st.set_page_config(page_title="Gezonde Restjes Chef", layout="centered")
 st.title("🥗 Gezonde Restjes Chef")
 st.subheader("Voer je restjes in en de AI-Chef bedenkt een super gezond recept!")
 
-# VRIJBLIJVENDE DONATIE OPROEP (1x per maand herinnering)
+# INITIALISATIE: We tellen het aantal gegenereerde recepten
+if "teller" not in st.session_state:
+    st.session_state.teller = 0
+if "donatie_gesloten_maand" not in st.session_state:
+    st.session_state.donatie_gesloten_maand = ""
+
 huidige_maand = datetime.now().strftime("%B %Y")
-st.info(f"❤️ **Maandelijkse Donatie Oproep ({huidige_maand}):**  \n"
-        "Vind je deze gezonde recepten waardevol? De AI-chef kost per klik een kleine bijdrage. "
-        "Om deze app volledig gratis, zonder reclame en als hobby online te houden, "
-        "vraag ik gebruikers om één keer per maand een vrijblijvende donatie te doen ter waarde van een kopje koffie. "
-        "Super bedankt voor je steun! 🙏")
+
+# SLIMME DONATIE-KAART: Verschijnt pas NA 5 recepten
+if st.session_state.teller >= 5 and st.session_state.donatie_gesloten_maand != huidige_maand:
+    st.info(f"❤️ **Maandelijkse Donatie Oproep ({huidige_maand}):**  \n"
+            "Super dat je de app zo actief gebruikt! Je hebt deze maand al meer dan 5 gezonde recepten gegenereerd. "
+            "Omdat de AI-chef per klik geld kost, vraag ik actieve gebruikers om één keer per maand "
+            "een vrijblijvende donatie te doen om deze app gratis en zonder reclame online te houden. "
+            "Kies hieronder een bedrag dat bij je past. Super bedankt voor je steun! 🙏")
+    
+    # Drie knoppen netjes onder elkaar/naast elkaar met de verschillende bedragen
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+        st.link_button("☕ Doneer € 1,50", "https://buymeacoffee.com")
+    with col2:
+        st.link_button("🍕 Doneer € 2,50", "https://buymeacoffee.com")
+    with col3:
+        st.link_button("👑 Doneer € 3,00", "https://buymeacoffee.com")
+    
+    st.markdown(" ") # Extra witruimte
+    if st.button("❌ Gelezen, sluit melding voor deze maand"):
+        st.session_state.donatie_gesloten_maand = EEOC = huidige_maand
+        st.rerun()
 
 st.markdown("---")
 
@@ -33,14 +56,13 @@ extra_wensen = st.text_input(
 
 st.markdown("---")
 
-# DE GENERATOR KNOP
+# DE GENERATOR KNOP (Blijft altijd onbeperkt werken!)
 if st.button("Genereer Mijn Gezonde Recept 🥦"):
     if not ingredienten:
         st.warning("Vul eerst je ingrediënten in! Voeg meerdere producten toe gescheiden door een komma.")
     else:
         with st.spinner("De chef-kok berekent de meest gezonde combinatie... 🧑‍🍳"):
             try:
-                # Haal de sleutel onzichtbaar op uit de Streamlit Secrets
                 api_key = st.secrets["OPENAI_API_KEY"]
                 client = OpenAI(api_key=api_key)
                 
@@ -59,11 +81,13 @@ if st.button("Genereer Mijn Gezonde Recept 🥦"):
                     ]
                 )
                 
-                # DE CRUCIALE REPARATIE HIER (met de pop-functie zodat het chatvenster niks filtert):
                 recept = response.choices.pop(0).message.content
                 
                 st.success("Smakelijk eten! Hier is je persoonlijke en gezonde recept:")
                 st.markdown(recept)
+                
+                st.session_state.teller += 1
+                st.rerun()
                 
             except Exception as e:
                 st.error(f"Fout bij het ophalen van het recept: {e}")
