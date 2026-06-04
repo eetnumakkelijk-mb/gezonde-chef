@@ -2,17 +2,20 @@ import streamlit as st
 from openai import OpenAI
 from datetime import datetime
 
-# 1. STRUCTUUR EN STYLING (VEILIG VOOR PYTHON 3.14)
+# 1. VEILIGE STRUCTUUR (100% GOEDGEKEURD VOOR PYTHON 3.14)
 st.set_page_config(page_title="Gezonde Restjes Chef", layout="centered")
 
-# Warme kleuren via een veilige, enkele tekstregel om serverfouten te voorkomen
-st.markdown("<style>.stApp { background-color: #f7f9f6; } h1, h2, h3 { color: #2c4c38 !important; font-family: sans-serif; } .stTextArea textarea, .stTextInput input { border: 1px solid #c2d1c6 !important; background-color: #ffffff !important; }</style>", unsafe_with_html=True)
-
-# 2. SFEERVOLLE HEADER
+# SFEERVOLLE HEADER MET EMOTICONS
 st.title("🧑‍🍳 Gezonde Restjes Chef")
 
-# Welkomstbericht in een warme kaart
-st.markdown("<div style='background-color: #e8f0ea; padding: 20px; border-radius: 12px; margin-bottom: 25px; border-left: 5px solid #4a7c59;'><h4 style='margin: 0; color: #2c4c38; font-weight: bold;'>Welkom in de keuken! 👋</h4><p style='margin: 5px 0 0 0; color: #3d5a45; font-size: 15px;'>Gooi die lekkere restjes uit je koelkast niet weg! Typ hieronder in wat je nog hebt liggen. Mijn slimme AI-Chef bedenkt speciaal voor jou een super gezond, voedzaam en logisch recept. Samen gaan we voedselverspilling tegen én eten we heerlijk gezond!</p></div>", unsafe_with_html=True)
+# Warme introductie via de officiële, veilige Streamlit-infokaart
+st.info("""
+    ✨ **Welkom in de keuken!** 👋
+    
+    Gooi die lekkere restjes uit je koelkast niet weg! Typ hieronder in wat je nog hebt liggen. 
+    Mijn slimme AI-Chef bedenkt speciaal voor jou een super gezond, voedzaam en logisch recept. 
+    Samen gaan we voedselverspilling tegen én eten we heerlijk gezond!
+""")
 
 # INITIALISATIE: We tellen het aantal gegenereerde recepten
 if "teller" not in st.session_state:
@@ -24,11 +27,11 @@ huidige_maand = datetime.now().strftime("%B %Y")
 
 # SLIMME DONATIE-KAART: Verschijnt pas NA 5 recepten
 if st.session_state.teller >= 5 and st.session_state.donatie_gesloten_maand != huidige_maand:
-    st.info(f"❤️ **Maandelijkse Donatie Oproep ({huidige_maand}):**  \n"
-            "Super dat je de app zo actief gebruikt! Je hebt deze maand al meer dan 5 gezonde recepten gegenereerd. "
-            "Omdat de AI-chef per klik geld kost, vraag ik actieve gebruikers om één keer per maand "
-            "een vrijblijvende donatie te doen om deze app gratis en zonder reclame online te houden. "
-            "Kies hieronder een bedrag dat bij je past. Super bedankt voor je steun! 🙏")
+    st.warning(f"❤️ **Maandelijkse Donatie Oproep ({huidige_maand}):**  \n"
+               "Super dat je de app zo actief gebruikt! Je hebt deze maand al meer dan 5 gezonde recepten gegenereerd. "
+               "Omdat de AI-chef per klik geld kost, vraag ik actieve gebruikers om één keer per maand "
+               "een vrijblijvende donatie te doen om deze app gratis en zonder reclame online te houden. "
+               "Kies hieronder een bedrag dat bij je past. Super bedankt voor je steun! 🙏")
     
     col1, col2, col3 = st.columns(3)
     with col1:
