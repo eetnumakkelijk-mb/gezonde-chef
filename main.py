@@ -35,7 +35,7 @@ if st.session_state.teller >= 5 and st.session_state.donatie_gesloten_maand != h
     
     st.markdown(" ") # Extra witruimte
     if st.button("❌ Gelezen, sluit melding voor deze maand"):
-        st.session_state.donatie_gesloten_maand = EEOC = huidige_maand
+        st.session_state.donatie_gesloten_maand = huidige_maand
         st.rerun()
 
 st.markdown("---")
