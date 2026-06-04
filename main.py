@@ -1,4 +1,4 @@
-import streamlit as st
+pythonimport streamlit as st
 from openai import OpenAI
 from datetime import datetime
 
@@ -23,7 +23,7 @@ if st.session_state.teller >= 5 and st.session_state.donatie_gesloten_maand != h
             "een vrijblijvende donatie te doen om deze app gratis en zonder reclame online te houden. "
             "Kies hieronder een bedrag dat bij je past. Super bedankt voor je steun! 🙏")
     
-    # Drie knoppen netjes onder elkaar/naast elkaar met de verschillende bedragen
+    # Drie knoppen netjes naast elkaar met de verschillende bedragen
     col1, col2, col3 = st.columns(3)
     
     with col1:
@@ -71,7 +71,7 @@ if st.button("Genereer Mijn Gezonde Recept 🥦"):
                     f"Extra wensen van de gebruiker: {extra_wensen}. "
                     f"Geef het recept een duidelijke titel, bereidingstijd, ingrediëntenlijst met hoeveelheden en een stappenplan. "
                     f"Belangrijk: Voeg aan het begin een korte alinea toe met de titel 'Waarom dit gerecht super gezond is:' "
-                    f"waarin je specifiek benadrukt waarom deze combinatie heel voedzaam en gezond is voor het lichaam."
+                    f"waarin je specifiek benadrukt waarom deze combinatie heel voedzaam og gezond is voor het lichaam."
                 )
                 response = client.chat.completions.create(
                     model="gpt-4o-mini",
