@@ -2,20 +2,10 @@ import streamlit as st
 from openai import OpenAI
 from datetime import datetime
 
-# 1. VEILIGE STRUCTUUR (100% GOEDGEKEURD VOOR PYTHON 3.14)
 st.set_page_config(page_title="Gezonde Restjes Chef", layout="centered")
 
-# SFEERVOLLE HEADER MET EMOTICONS
-st.title("🧑‍🍳 Gezonde Restjes Chef")
-
-# Warme introductie via de officiële, veilige Streamlit-infokaart
-st.info("""
-    ✨ **Welkom in de keuken!** 👋
-    
-    Gooi die lekkere restjes uit je koelkast niet weg! Typ hieronder in wat je nog hebt liggen. 
-    Mijn slimme AI-Chef bedenkt speciaal voor jou een super gezond, voedzaam en logisch recept. 
-    Samen gaan we voedselverspilling tegen én eten we heerlijk gezond!
-""")
+st.title("🥗 Gezonde Restjes Chef")
+st.subheader("Voer je restjes in en kook gezond!")
 
 # INITIALISATIE: We tellen het aantal gegenereerde recepten
 if "teller" not in st.session_state:
@@ -27,11 +17,10 @@ huidige_maand = datetime.now().strftime("%B %Y")
 
 # SLIMME DONATIE-KAART: Verschijnt pas NA 5 recepten
 if st.session_state.teller >= 5 and st.session_state.donatie_gesloten_maand != huidige_maand:
-    st.warning(f"❤️ **Maandelijkse Donatie Oproep ({huidige_maand}):**  \n"
-               "Super dat je de app zo actief gebruikt! Je hebt deze maand al meer dan 5 gezonde recepten gegenereerd. "
-               "Omdat de AI-chef per klik geld kost, vraag ik actieve gebruikers om één keer per maand "
-               "een vrijblijvende donatie te doen om deze app gratis en zonder reclame online te houden. "
-               "Kies hieronder een bedrag dat bij je past. Super bedankt voor je steun! 🙏")
+    st.info(f"❤️ **Maandelijkse Donatie Oproep ({huidige_maand}):**  \n"
+            "Je hebt deze maand al meer dan 5 gezonde recepten gegenereerd! Omdat de AI geld kost, "
+            "vraag ik actieve gebruikers om een kleine donatie te doen om deze app gratis en zonder reclame online te houden. "
+            "Kies een bedrag dat bij je past:")
     
     col1, col2, col3 = st.columns(3)
     with col1:
@@ -49,53 +38,36 @@ if st.session_state.teller >= 5 and st.session_state.donatie_gesloten_maand != h
 st.markdown("---")
 
 # INGREDIËNTEN INVOER
-st.markdown("### 🥑 1. Wat ligt er nog in je koelkast?")
-ingredienten = st.text_area(
-    "Typ alle ingrediënten die je wilt gebruiken, gescheiden door een komma:",
-    placeholder="Bijv. kip, broccoli, rijst, eieren, tomaat, ui...",
-    help="Je kunt zoveel ingrediënten invullen als je zelf wilt!"
-)
-
-st.markdown("### 📝 2. Extra wensen (Optioneel)")
-extra_wensen = st.text_input(
-    "Heb je specifieke voorkeuren?", 
-    placeholder="Bijv. binnen 15 minuten, vegetarisch, koolhydraatarm, extra eiwit"
-)
+ingredienten = st.text_area("Typ alle ingrediënten, gescheiden door een komma:", placeholder="Bijv. kip, broccoli, eieren, ui")
+extra_wensen = st.text_input("Extra wensen? (Optioneel)", placeholder="Bijv. binnen 15 minuten, koolhydraatarm")
 
 st.markdown("---")
 
-# DE GENERATOR KNOP (Blijft altijd onbeperkt werken!)
+# DE GENERATOR KNOP
 if st.button("🧑‍🍳 Bedenk Mijn Gezonde Recept!"):
     if not ingredienten:
-        st.warning("Vul eerst je ingrediënten in! Voeg meerdere producten toe gescheiden door een komma.")
+        st.warning("Vul eerst je ingrediënten in!")
     else:
-        with st.spinner("De chef-kok berekent de meest gezonde combinatie... 🍲"):
+        with st.spinner("De chef-kok denkt na... 🍲"):
             try:
                 api_key = st.secrets["OPENAI_API_KEY"]
                 client = OpenAI(api_key=api_key)
                 
-                prompt = (
-                    f"Bedenk een zo gezond mogelijk en logisch recept met deze ingrediënten: {ingredienten}. "
-                    f"Extra wensen van de gebruiker: {extra_wensen}. "
-                    f"Geef het recept een duidelijke titel, bereidingstijd, ingrediëntenlijst met hoeveelheden en een stappenplan. "
-                    f"Belangrijk: Voeg aan het begin een korte alinea toe met de titel 'Waarom dit gerecht super gezond is:' "
-                    f"waarin je specifiek benadrukt waarom deze combinatie heel voedzaam en gezond is voor het lichaam."
-                )
+                prompt = f"Bedenk een zo gezond mogelijk recept met: {ingredienten}. Wensen: {extra_wensen}. Leg uit waarom het gezond is."
                 response = client.chat.completions.create(
                     model="gpt-4o-mini",
                     messages=[
-                        {"role": "system", "content": "Je bent een professionele restjes-chef en voedingsdeskundige. Je focust altijd op maximale gezondheid. Antwoord altijd in het Nederlands."},
+                        {"role": "system", "content": "Je bent een gezonde chef. Antwoord in het Nederlands."},
                         {"role": "user", "content": prompt}
                     ]
                 )
                 
                 recept = response.choices.pop(0).message.content
-                
-                st.success("Smakelijk eten! Hier is je persoonlijke en gezonde recept:")
+                st.success("Smakelijk eten!")
                 st.markdown(recept)
                 
                 st.session_state.teller += 1
                 st.rerun()
                 
             except Exception as e:
-                st.error(f"Fout bij het ophalen van het recept: {e}")
+                st.error(f"Fout: {e}")
