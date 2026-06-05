@@ -9,21 +9,9 @@ if not os.path.exists(".streamlit"):
 with open(".streamlit/config.toml", "w") as f:
     f.write("[theme]\nprimaryColor = '#557a5e'\nbackgroundColor = '#f1f2e4'\nsecondaryBackgroundColor = '#e1ebd5'\ntextColor = '#213326'\nfont = 'sans serif'\n")
 
-# 1. STRUCTUUR EN EXTRA RONDING VOOR DE KNOP (PIZZA-STIJL)
+# 1. STRUCTUUR EN EXTRA RONDING (VEILIG OP ÉÉN REGEL VOOR PYTHON 3.14)
 st.set_page_config(page_title="Gezonde Restjes Chef", layout="centered")
-
-# Onzichtbare code om de knop extra rond te maken en de invoervakken groen te kleuren
-st.markdown("""
-    <style>
-        div.stButton > button:first-child {
-            border-radius: 30px !important;
-            padding: 15px 30px !important;
-            font-size: 16px !important;
-            font-weight: bold !important;
-            border: none !important;
-        }
-    </style>
-""", unsafe_with_html=True)
+st.markdown("<style>div.stButton>button{border-radius:30px !important;padding:15px 30px !important;font-size:16px !important;font-weight:bold !important;border:none !important;}</style>", unsafe_with_html=True)
 
 # 2. SFEERVOLLE HEADER
 st.title("🥬 Gezonde Restjes Chef")
@@ -32,7 +20,7 @@ st.success("""
     ✨ **Welkom in de gezellige keuken!** 👋
     
     Gooi die lekkere restjes uit je koelkast niet weg! Typ hieronder in wat je nog hebt liggen. 
-    Mijn slimme AI-Chef bedenkt speciaal voor jou een super gezond, voedzaam en logisch recept. 
+    Mijn slimme AI-Chef bedenkt speciaal voor jou een super gezond, voedzaam og gezond recept. 
     Samen gaan we voedselverspilling tegen én eten we heerlijk gezond!
 """)
 
@@ -83,7 +71,7 @@ extra_wensen = st.text_input(
 
 st.markdown("---")
 
-# 3. VERBETERDE SCHERMBREDE RONDE KNOP
+# 3. SCHERMBREDE RONDE KNOP
 st.markdown("### 👨‍🍳 Recept samenstellen")
 if st.button("🔥 🧑‍🍳 LAAT GEZONDE RESTJES CHEF NU JOUW RECEPT BEDENKEN! 🍲 🔥", use_container_width=True):
     if not ingredienten:
