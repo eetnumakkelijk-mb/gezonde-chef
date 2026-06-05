@@ -9,8 +9,22 @@ if not os.path.exists(".streamlit"):
 with open(".streamlit/config.toml", "w") as f:
     f.write("[theme]\nprimaryColor = '#2c4c38'\nbackgroundColor = '#f4f5e9'\nsecondaryBackgroundColor = '#e4e8ce'\ntextColor = '#17261c'\nfont = 'serif'\n")
 
-# 1. STRUCTUUR VAN DE APP (100% VEILIG VOOR PYTHON 3.14)
-st.set_page_config(page_title="Gezonde Restjes Chef", layout="centered")
+# 1. GOOGLE TURBO-OPTIMALISATIE (SEO METADATA)
+# Deze termen zijn onzichtbaar voor de gebruiker, maar Google indexeert ze direct voor snelle hits!
+st.set_page_config(
+    page_title="Gezonde Restjes Chef - Recepten Maken Met Restjes & Koelkast Opmaken", 
+    page_icon="🥬",
+    layout="centered"
+)
+
+# Onzichtbare trefwoordenlijst voor de Google-zoekmachine
+st.markdown("""
+    <div style="display:none;">
+        recept restjes, koken met restjes, restjes verwerken, wat eten we vandaag, goedkoop koken, budget recepten, 
+        koelkast opmaken, voedselverspilling tegengaan, gezond recept generator, restjes groenten opmaken, 
+        recept met wat ik in huis heb, makkelijk gezond koken, kookboek restjes, iDEAL donatie kook app, bol.com keukenhulpjes
+    </div>
+""", unsafe_with_html=True)
 
 # 2. HEADER
 st.title("🥬 Gezonde Restjes Chef")
@@ -49,7 +63,7 @@ if st.session_state.teller >= 5 and st.session_state.donatie_gesloten_maand != h
     
     st.markdown(" ") 
     if st.button("❌ Gelezen, sluit melding voor deze maand"):
-        st.session_state.donatie_gesloten_maand = EEOC = huidige_maand
+        st.session_state.donatie_gesloten_maand = huidige_maand
         st.rerun()
 
 st.markdown("---")
@@ -95,7 +109,7 @@ if st.button("🔥 Heb je alle ingrediënten ingevuld? Klik dan hier voor je rec
                     f"Extra wensen van de gebruiker: {extra_wensen}. "
                     f"Geef het recept een duidelijke titel, bereidingstijd, ingrediëntenlijst met hoeveelheden en een stappenplan. "
                     f"Belangrijk: Voeg aan het begin een korte alinea toe met de titel 'Waarom dit gerecht super gezond is:' "
-                    f"waarin je specifiek benadrukt waarom deze combinatie heel voedzaam og gezond is voor het lichaam."
+                    f"waarin je specifiek benadrukt waarom deze combinatie heel voedzaam en gezond is voor het lichaam."
                 )
                 
                 response = client.chat.completions.create(
