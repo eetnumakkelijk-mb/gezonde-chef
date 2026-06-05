@@ -3,11 +3,11 @@ from openai import OpenAI
 from datetime import datetime
 import os
 
-# AUTOMATISCHE KLEURENMAKER: Olijfgeel, zachtgroene vlakken en kookboeklettertype
+# AUTOMATISCHE KLEURENMAKER: Volledig geharmoniseerd palet (zacht olijfgeel en crème)
 if not os.path.exists(".streamlit"):
     os.makedirs(".streamlit")
 with open(".streamlit/config.toml", "w") as f:
-    f.write("[theme]\nprimaryColor = '#557a5e'\nbackgroundColor = '#f1f2e4'\nsecondaryBackgroundColor = '#e1ebd5'\ntextColor = '#213326'\nfont = 'serif'\n")
+    f.write("[theme]\nprimaryColor = '#557a5e'\nbackgroundColor = '#f4f5e9'\nsecondaryBackgroundColor = '#e9ebd7'\ntextColor = '#213326'\nfont = 'serif'\n")
 
 # 1. STRUCTUUR VAN DE APP (100% VEILIG VOOR PYTHON 3.14)
 st.set_page_config(page_title="Gezonde Restjes Chef", layout="centered")
@@ -54,24 +54,22 @@ if st.session_state.teller >= 5 and st.session_state.donatie_gesloten_maand != h
 
 st.markdown("---")
 
-# INGREDIËNTEN INVOER MET GROENTEN RONDOM
-st.markdown("### 🥦 🥕 1. Wat ligt er nog in je koelkast? 🍅 🧅")
+# INGREDIËNTEN INVOER (Teksten nu direct in het label voor gelijke tekstkleur!)
 ingredienten = st.text_area(
-    "Typ alle ingrediënten die je wilt gebruiken, gescheiden door een komma:",
+    "🥦 🥕 1. Wat ligt er nog in je koelkast? Typ je ingrediënten gescheiden door een komma: 🍅 🧅",
     placeholder="Bijv. kip, broccoli, rijst, eieren, tomaat, ui...",
     help="Je kunt zoveel ingrediënten invullen als je zelf wilt!"
 )
 
-# EXTRA WENSEN MET CULINAIR ICOON (POT MET POLLEPEL)
-st.markdown("### 🍲 🔪 2. Extra wensen? (Optioneel) 🍋 🌿")
+# EXTRA WENSEN
 extra_wensen = st.text_input(
-    "Heb je specifieke voorkeuren?", 
+    "🍲 🔪 2. Heb je specifieke extra wensen? (Optioneel) 🍋 🌿", 
     placeholder="Bijv. binnen 15 minuten, vegetarisch, koolhydraatarm, extra eiwit"
 )
 
 st.markdown("---")
 
-# 3. VERBETERDE SCHERMBREDE PROMINENTE KNOP MET UPGRADED TEKST
+# 3. VERBETERDE SCHERMBREDE PROMINENTE KNOP
 st.markdown("### 🍳 🌿 🍲 🌶️ 👨‍🍳 Recept samenstellen")
 if st.button("🔥 Heb je alle ingrediënten ingevuld? Klik dan hier voor je recept! 🍳 🔥", use_container_width=True, type="primary"):
     if not ingredienten:
@@ -85,7 +83,7 @@ if st.button("🔥 Heb je alle ingrediënten ingevuld? Klik dan hier voor je rec
                 prompt = (
                     f"Bedenk als de persoonlijke 'Restjes Chef' een zo gezond mogelijk en logisch recept met deze ingrediënten: {ingredienten}. "
                     f"Extra wensen van de gebruiker: {extra_wensen}. "
-                    f"Geef het recept een duidelijke titel, bereidingstijd, ingrediëntenlijst met hoeveelheden en un stappenplan. "
+                    f"Geef het recept een duidelijke titel, bereidingstijd, ingrediëntenlijst met hoeveelheden en een stappenplan. "
                     f"Belangrijk: Voeg aan het begin een korte alinea toe met de titel 'Waarom dit gerecht super gezond is:' "
                     f"waarin je specifiek benadrukt waarom deze combinatie heel voedzaam en gezond is voor het lichaam."
                 )
