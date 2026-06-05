@@ -9,9 +9,8 @@ if not os.path.exists(".streamlit"):
 with open(".streamlit/config.toml", "w") as f:
     f.write("[theme]\nprimaryColor = '#557a5e'\nbackgroundColor = '#f1f2e4'\nsecondaryBackgroundColor = '#e1ebd5'\ntextColor = '#213326'\nfont = 'sans serif'\n")
 
-# 1. STRUCTUUR EN EXTRA RONDING (VEILIG OP ÉÉN REGEL VOOR PYTHON 3.14)
+# 1. STRUCTUUR VAN DE APP (100% VEILIG VOOR PYTHON 3.14)
 st.set_page_config(page_title="Gezonde Restjes Chef", layout="centered")
-st.markdown("<style>div.stButton>button{border-radius:30px !important;padding:15px 30px !important;font-size:16px !important;font-weight:bold !important;border:none !important;}</style>", unsafe_with_html=True)
 
 # 2. SFEERVOLLE HEADER
 st.title("🥬 Gezonde Restjes Chef")
@@ -20,7 +19,7 @@ st.success("""
     ✨ **Welkom in de gezellige keuken!** 👋
     
     Gooi die lekkere restjes uit je koelkast niet weg! Typ hieronder in wat je nog hebt liggen. 
-    Mijn slimme AI-Chef bedenkt speciaal voor jou een super gezond, voedzaam og gezond recept. 
+    Mijn slimme AI-Chef bedenkt speciaal voor jou een super gezond, voedzaam en gezond recept. 
     Samen gaan we voedselverspilling tegen én eten we heerlijk gezond!
 """)
 
@@ -71,9 +70,9 @@ extra_wensen = st.text_input(
 
 st.markdown("---")
 
-# 3. SCHERMBREDE RONDE KNOP
+# 3. VERBETERDE SCHERMBREDE PROMINENTE KNOP
 st.markdown("### 👨‍🍳 Recept samenstellen")
-if st.button("🔥 🧑‍🍳 LAAT GEZONDE RESTJES CHEF NU JOUW RECEPT BEDENKEN! 🍲 🔥", use_container_width=True):
+if st.button("🔥 🧑‍🍳 LAAT GEZONDE RESTJES CHEF NU JOUW RECEPT BEDENKEN! 🍲 🔥", use_container_width=True, type="primary"):
     if not ingredienten:
         st.warning("Vul eerst je ingrediënten in! Voeg meerdere producten toe gescheiden door een komma.")
     else:
@@ -92,7 +91,7 @@ if st.button("🔥 🧑‍🍳 LAAT GEZONDE RESTJES CHEF NU JOUW RECEPT BEDENKEN
                 response = client.chat.completions.create(
                     model="gpt-4o-mini",
                     messages=[
-                        {"role": "system", "content": "Je bent een professionele restjes-chef en voedingsdeskundige. Je focust altijd op maximale gezondheid. Antwoord altijd in het Nederlands."},
+                        {"role": "system", "content": "Je bent een professionele restjes-chef network voedingsdeskundige. Je focust altijd op maximale gezondheid. Antwoord altijd in het Nederlands."},
                         {"role": "user", "content": prompt}
                     ]
                 )
