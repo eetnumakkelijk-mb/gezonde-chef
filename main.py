@@ -3,14 +3,17 @@ from openai import OpenAI
 from datetime import datetime
 import os
 
-# AUTOMATISCHE KLEURENMAKER: Olijfgeel, zachtgroene vlakken en kookboeklettertype
+# AUTOMATISCHE KLEURENMAKER: Professioneel kookboek-palet met diepe contrasten
 if not os.path.exists(".streamlit"):
     os.makedirs(".streamlit")
 with open(".streamlit/config.toml", "w") as f:
-    f.write("[theme]\nprimaryColor = '#557a5e'\nbackgroundColor = '#f4f5e9'\nsecondaryBackgroundColor = '#e9ebd7'\ntextColor = '#213326'\nfont = 'serif'\n")
+    f.write("[theme]\nprimaryColor = '#2c4c38'\nbackgroundColor = '#f2f3e8'\nsecondaryBackgroundColor = '#e2e6ce'\ntextColor = '#17261c'\nfont = 'serif'\n")
 
 # 1. STRUCTUUR VAN DE APP (100% VEILIG VOOR PYTHON 3.14)
 st.set_page_config(page_title="Gezonde Restjes Chef", layout="centered")
+
+# Extra onzichtbare optimalisatie om de randen van de vakken nóg strakker te definiëren
+st.markdown("<style>textarea, input { border: 2px solid #2c4c38 !important; }</style>", unsafe_with_html=True)
 
 # 2. HEADER
 st.title("🥬 Gezonde Restjes Chef")
@@ -77,7 +80,7 @@ extra_wensen = st.text_input(
 
 st.markdown("---")
 
-# 3. VERBETERDE SCHERMBREDE PROMINENTE KNOP
+# 3. VERBETERDE PROMINENTE KNOP
 st.markdown("### 🍅 Recept samenstellen")
 if st.button("🔥 Heb je alle ingrediënten ingevuld? Klik dan hier voor je recept! 🍳 🔥", use_container_width=True, type="primary"):
     if not ingredienten:
