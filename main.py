@@ -54,16 +54,24 @@ if st.session_state.teller >= 5 and st.session_state.donatie_gesloten_maand != h
 
 st.markdown("---")
 
-# INGREDIËNTEN INVOER (Teksten nu direct in het label voor gelijke tekstkleur!)
+# INGREDIËNTEN INVOER (Nu met extra grote, duidelijke en perfect gekleurde kopteksten)
+st.markdown("### 🥦 🥕 1. Wat ligt er nog in je koelkast?")
+st.markdown("**Typ alle ingrediënten die je wilt gebruiken, gescheiden door een komma:** 🍅 🧅")
 ingredienten = st.text_area(
-    "🥦 🥕 1. Wat ligt er nog in je koelkast? Typ je ingrediënten gescheiden door een komma: 🍅 🧅",
+    label="Ingrediënten invoerveld",
+    label_visibility="collapsed",
     placeholder="Bijv. kip, broccoli, rijst, eieren, tomaat, ui...",
     help="Je kunt zoveel ingrediënten invullen als je zelf wilt!"
 )
 
+st.markdown(" ") # Witruimte
+
 # EXTRA WENSEN
+st.markdown("### 🍲 🔪 2. Heb je specifieke extra wensen? (Optioneel)")
+st.markdown("**Vul hier je persoonlijke voorkeuren in:** 🍋 🌿")
 extra_wensen = st.text_input(
-    "🍲 🔪 2. Heb je specifieke extra wensen? (Optioneel) 🍋 🌿", 
+    label="Extra wensen invoerveld",
+    label_visibility="collapsed",
     placeholder="Bijv. binnen 15 minuten, vegetarisch, koolhydraatarm, extra eiwit"
 )
 
