@@ -1,14 +1,20 @@
 import streamlit as st
 from openai import OpenAI
 from datetime import datetime
+import os
 
-# 1. VEILIGE STRUCTUUR (100% STABIEL VOOR INTERNETSERVERS)
+# AUTOMATISCHE KLEURENMAKER: Dit maakt het bestand .streamlit/config.toml voor je aan op de server!
+if not os.path.exists(".streamlit"):
+    os.makedirs(".streamlit")
+with open(".streamlit/config.toml", "w") as f:
+    f.write("[theme]\nprimaryColor = '#4a7c59'\nbackgroundColor = '#f7f9f6'\nsecondaryBackgroundColor = '#e8f0ea'\ntextColor = '#2c4c38'\nfont = 'sans serif'\n")
+
+# 1. STRUCTUUR VAN DE APP
 st.set_page_config(page_title="Gezonde Restjes Chef", layout="centered")
 
 # 2. SFEERVOLLE HEADER
 st.title("🥬 Gezonde Restjes Chef")
 
-# Warme introductie via de officiële, veilige groene Streamlit-infokaart
 st.success("""
     ✨ **Welkom in de gezellige keuken!** 👋
     
@@ -64,7 +70,7 @@ extra_wensen = st.text_input(
 
 st.markdown("---")
 
-# DE GENERATOR KNOP (Blijft altijd onbeperkt werken!)
+# DE GENERATOR KNOP
 if st.button("🧑‍🍳 Bedenk Mijn Gezonde Recept!"):
     if not ingredienten:
         st.warning("Vul eerst je ingrediënten in! Voeg meerdere producten toe gescheiden door een komma.")
