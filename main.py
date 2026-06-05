@@ -49,7 +49,7 @@ if st.session_state.teller >= 5 and st.session_state.donatie_gesloten_maand != h
     
     st.markdown(" ") 
     if st.button("❌ Gelezen, sluit melding voor deze maand"):
-        st.session_state.donatie_gesloten_maand = huidige_maand
+        st.session_state.donatie_gesloten_maand = EEOC = huidige_maand
         st.rerun()
 
 st.markdown("---")
@@ -74,7 +74,7 @@ with st.container(border=True):
     extra_wensen = st.text_input(
         label="Extra wensen invoerveld",
         label_visibility="collapsed",
-        placeholder="Bijv. binnen 15 minutes, vegetarisch, koolhydraatarm, extra eiwit"
+        placeholder="Bijv. binnen 15 minuten, vegetarisch, koolhydraatarm, extra eiwit"
     )
 
 st.markdown("---")
@@ -95,7 +95,7 @@ if st.button("🔥 Heb je alle ingrediënten ingevuld? Klik dan hier voor je rec
                     f"Extra wensen van de gebruiker: {extra_wensen}. "
                     f"Geef het recept een duidelijke titel, bereidingstijd, ingrediëntenlijst met hoeveelheden en een stappenplan. "
                     f"Belangrijk: Voeg aan het begin een korte alinea toe met de titel 'Waarom dit gerecht super gezond is:' "
-                    f"waarin je specifiek benadrukt waarom deze combinatie heel voedzaam en gezond is voor het lichaam."
+                    f"waarin je specifiek benadrukt waarom deze combinatie heel voedzaam og gezond is voor het lichaam."
                 )
                 
                 response = client.chat.completions.create(
@@ -112,7 +112,7 @@ if st.button("🔥 Heb je alle ingrediënten ingevuld? Klik dan hier voor je rec
                 st.success("Smakelijk eten! Hier is je persoonlijke en gezonde recept:")
                 st.markdown(recept)
                 
-                # SUBTIELE VERDIEN-KAART (Knaagt niet aan de sfeer, staat direct onder het recept)
+                # SUBTIELE VERDIEN-KAART
                 st.markdown("---")
                 with st.container(border=True):
                     st.markdown("### 🛒 Tip van de Restjes Chef")
