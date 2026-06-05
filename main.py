@@ -9,35 +9,16 @@ if not os.path.exists(".streamlit"):
 with open(".streamlit/config.toml", "w") as f:
     f.write("[theme]\nprimaryColor = '#557a5e'\nbackgroundColor = '#f1f2e4'\nsecondaryBackgroundColor = '#e1ebd5'\ntextColor = '#213326'\nfont = 'serif'\n")
 
-# 1. VEILIGE STRUCTUUR EN KRUIDEN/PANNEN ACHTERGROND PATROON
+# 1. STRUCTUUR VAN DE APP (100% VEILIG VOOR PYTHON 3.14)
 st.set_page_config(page_title="Gezonde Restjes Chef", layout="centered")
 
-# Een onzichtbare watermerkregel die sfeervolle pannen en kruiden subtiel over de achtergrond strooit
-st.markdown("""
-    <style>
-        .stApp::before {
-            content: '🍳  🌿  🍲  🌶️  🍳  🌿  🍲  🌶️  🍳  🌿  🍲  🌶️  🍳  🌿  🍲  🌶️  🍳  🌿  🍲  🌶️';
-            position: fixed;
-            top: 10px;
-            left: 0;
-            width: 100%;
-            opacity: 0.07;
-            font-size: 24px;
-            white-space: nowrap;
-            overflow: hidden;
-            letter-spacing: 35px;
-            pointer-events: none;
-        }
-    </style>
-""", unsafe_with_html=True)
-
-# 2. SFEERVOLLE HEADER (PERSOONLIJK GEMAAKT)
+# 2. SFEERVOLLE HEADER
 st.title("🥬 Gezonde Restjes Chef")
 
 st.success("""
     ✨ **Welkom in de gezellige keuken!** 👋
     
-    Gooi die lekkere restjes uit je koelkast niet weg! Typ hieronder in wat je nog hebt liggen. 
+    Gooi die lekkere restjes uit je koelkast nu niet weg! Typ hieronder in wat je nog hebt liggen. 
     Jouw persoonlijke **Restjes Chef** bedenkt speciaal voor jou een super gezond, voedzaam en lekker recept. 
     Samen gaan we voedselverspilling tegen én eten we heerlijk gezond!
 """)
@@ -91,7 +72,7 @@ extra_wensen = st.text_input(
 st.markdown("---")
 
 # 3. VERBETERDE SCHERMBREDE PROMINENTE KNOP MET UPGRADED TEKST
-st.markdown("### 👨‍🍳 Recept samenstellen")
+st.markdown("### 🍳 🌿 🍲 🌶️ 👨‍🍳 Recept samenstellen")
 if st.button("🔥 Heb je alle ingrediënten ingevuld? Klik dan hier voor je recept! 🍳 🔥", use_container_width=True, type="primary"):
     if not ingredienten:
         st.warning("Vul eerst je ingrediënten in! Voeg meerdere producten toe gescheiden door een komma.")
@@ -104,7 +85,7 @@ if st.button("🔥 Heb je alle ingrediënten ingevuld? Klik dan hier voor je rec
                 prompt = (
                     f"Bedenk als de persoonlijke 'Restjes Chef' een zo gezond mogelijk en logisch recept met deze ingrediënten: {ingredienten}. "
                     f"Extra wensen van de gebruiker: {extra_wensen}. "
-                    f"Geef het recept een duidelijke titel, bereidingstijd, ingrediëntenlijst met hoeveelheden en een stappenplan. "
+                    f"Geef het recept een duidelijke titel, bereidingstijd, ingrediëntenlijst met hoeveelheden en un stappenplan. "
                     f"Belangrijk: Voeg aan het begin een korte alinea toe met de titel 'Waarom dit gerecht super gezond is:' "
                     f"waarin je specifiek benadrukt waarom deze combinatie heel voedzaam en gezond is voor het lichaam."
                 )
