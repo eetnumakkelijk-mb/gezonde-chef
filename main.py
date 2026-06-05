@@ -3,11 +3,11 @@ from openai import OpenAI
 from datetime import datetime
 import os
 
-# AUTOMATISCHE KLEURENMAKER: Dit dwingt de server om ALLES warm te kleuren!
+# AUTOMATISCHE KLEURENMAKER: Dwingt de server naar een nóg warmere ambiance
 if not os.path.exists(".streamlit"):
     os.makedirs(".streamlit")
 with open(".streamlit/config.toml", "w") as f:
-    f.write("[theme]\nprimaryColor = '#4a7c59'\nbackgroundColor = '#f4f1ea'\nsecondaryBackgroundColor = '#e6ebd4'\ntextColor = '#1e3325'\nfont = 'sans serif'\n")
+    f.write("[theme]\nprimaryColor = '#d96b43'\nbackgroundColor = '#f5efe6'\nsecondaryBackgroundColor = '#e6dfd5'\ntextColor = '#2b231f'\nfont = 'sans serif'\n")
 
 # 1. STRUCTUUR VAN DE APP
 st.set_page_config(page_title="Gezonde Restjes Chef", layout="centered")
@@ -70,8 +70,9 @@ extra_wensen = st.text_input(
 
 st.markdown("---")
 
-# DE GENERATOR KNOP
-if st.button("🧑‍🍳 Bedenk Mijn Gezonde Recept!"):
+# 3. EXTRA MACHTIGE & OPVALLENDE GENERATOR KNOP
+st.markdown("### 👨‍🍳 Recept samenstellen")
+if st.button("🔥  🧑‍🍳  LAAT DE AI-CHEF NU JOUW RECEPT BEDENKEN!  🍲  🔥", use_container_width=True):
     if not ingredienten:
         st.warning("Vul eerst je ingrediënten in! Voeg meerdere producten toe gescheiden door een komma.")
     else:
