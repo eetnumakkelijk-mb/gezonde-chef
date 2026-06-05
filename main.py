@@ -3,14 +3,33 @@ from openai import OpenAI
 from datetime import datetime
 import os
 
-# AUTOMATISCHE KLEURENMAKER & COOKBOOK LETTERTYPE (serif)
+# AUTOMATISCHE KLEURENMAKER: Olijfgeel, zachtgroene vlakken en kookboeklettertype
 if not os.path.exists(".streamlit"):
     os.makedirs(".streamlit")
 with open(".streamlit/config.toml", "w") as f:
     f.write("[theme]\nprimaryColor = '#557a5e'\nbackgroundColor = '#f1f2e4'\nsecondaryBackgroundColor = '#e1ebd5'\ntextColor = '#213326'\nfont = 'serif'\n")
 
-# 1. STRUCTUUR VAN DE APP 
+# 1. VEILIGE STRUCTUUR EN KRUIDEN/PANNEN ACHTERGROND PATROON
 st.set_page_config(page_title="Gezonde Restjes Chef", layout="centered")
+
+# Een onzichtbare watermerkregel die sfeervolle pannen en kruiden subtiel over de achtergrond strooit
+st.markdown("""
+    <style>
+        .stApp::before {
+            content: '🍳  🌿  🍲  🌶️  🍳  🌿  🍲  🌶️  🍳  🌿  🍲  🌶️  🍳  🌿  🍲  🌶️  🍳  🌿  🍲  🌶️';
+            position: fixed;
+            top: 10px;
+            left: 0;
+            width: 100%;
+            opacity: 0.07;
+            font-size: 24px;
+            white-space: nowrap;
+            overflow: hidden;
+            letter-spacing: 35px;
+            pointer-events: none;
+        }
+    </style>
+""", unsafe_with_html=True)
 
 # 2. SFEERVOLLE HEADER (PERSOONLIJK GEMAAKT)
 st.title("🥬 Gezonde Restjes Chef")
@@ -35,7 +54,7 @@ huidige_maand = datetime.now().strftime("%B %Y")
 if st.session_state.teller >= 5 and st.session_state.donatie_gesloten_maand != huidige_maand:
     st.warning(f"❤️ **Maandelijkse Donatie Oproep ({huidige_maand}):**  \n"
                "Super dat je de app zo actief gebruikt! Je hebt deze maand al meer dan 5 gezonde recepten gegenereerd. "
-               "Omdat de Restjes Chef per klik kleine serverkosten maakt, vraag ik actieve gebruikers om één keer per maand "
+               "Omdat de Restjes Chef kleine serverkosten maakt, vraag ik actieve gebruikers om één keer per maand "
                "een vrijblijvende donatie te doen om deze app gratis en zonder reclame online te houden. "
                "Kies hieronder een bedrag dat bij je past. Super bedankt voor je steun! 🙏")
     
@@ -71,9 +90,9 @@ extra_wensen = st.text_input(
 
 st.markdown("---")
 
-# 3. VERBETERDE SCHERMBREDE PROMINENTE KNOP
+# 3. VERBETERDE SCHERMBREDE PROMINENTE KNOP MET UPGRADED TEKST
 st.markdown("### 👨‍🍳 Recept samenstellen")
-if st.button("🔥 🧑‍🍳 LAAT GEZONDE RESTJES CHEF NU JOUW RECEPT BEDENKEN! 🍲 🔥", use_container_width=True, type="primary"):
+if st.button("🔥 Heb je alle ingrediënten ingevuld? Klik dan hier voor je recept! 🍳 🔥", use_container_width=True, type="primary"):
     if not ingredienten:
         st.warning("Vul eerst je ingrediënten in! Voeg meerdere producten toe gescheiden door een komma.")
     else:
@@ -82,7 +101,6 @@ if st.button("🔥 🧑‍🍳 LAAT GEZONDE RESTJES CHEF NU JOUW RECEPT BEDENKEN
                 api_key = st.secrets["OPENAI_API_KEY"]
                 client = OpenAI(api_key=api_key)
                 
-                # Hier vertellen we de AI ook dat hij spreekt als de 'Restjes Chef'
                 prompt = (
                     f"Bedenk als de persoonlijke 'Restjes Chef' een zo gezond mogelijk en logisch recept met deze ingrediënten: {ingredienten}. "
                     f"Extra wensen van de gebruiker: {extra_wensen}. "
