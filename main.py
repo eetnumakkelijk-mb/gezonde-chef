@@ -3,17 +3,14 @@ from openai import OpenAI
 from datetime import datetime
 import os
 
-# AUTOMATISCHE KLEURENMAKER: Professioneel kookboek-palet met diepe contrasten
+# AUTOMATISCHE KLEURENMAKER: Hoogwaardig kookboek-palet (diep donkergroen met olijf/crème)
 if not os.path.exists(".streamlit"):
     os.makedirs(".streamlit")
 with open(".streamlit/config.toml", "w") as f:
-    f.write("[theme]\nprimaryColor = '#2c4c38'\nbackgroundColor = '#f2f3e8'\nsecondaryBackgroundColor = '#e2e6ce'\ntextColor = '#17261c'\nfont = 'serif'\n")
+    f.write("[theme]\nprimaryColor = '#2c4c38'\nbackgroundColor = '#f4f5e9'\nsecondaryBackgroundColor = '#e4e8ce'\ntextColor = '#17261c'\nfont = 'serif'\n")
 
 # 1. STRUCTUUR VAN DE APP (100% VEILIG VOOR PYTHON 3.14)
 st.set_page_config(page_title="Gezonde Restjes Chef", layout="centered")
-
-# Extra onzichtbare optimalisatie om de randen van de vakken nóg strakker te definiëren
-st.markdown("<style>textarea, input { border: 2px solid #2c4c38 !important; }</style>", unsafe_with_html=True)
 
 # 2. HEADER
 st.title("🥬 Gezonde Restjes Chef")
@@ -57,26 +54,28 @@ if st.session_state.teller >= 5 and st.session_state.donatie_gesloten_maand != h
 
 st.markdown("---")
 
-# INGREDIËNTEN INVOER
-st.markdown("### 🥦 1. Wat ligt er nog in je koelkast?")
-st.markdown("Typ alle ingrediënten die je wilt gebruiken, gescheiden door een komma:")
-ingredienten = st.text_area(
-    label="Ingrediënten invoerveld",
-    label_visibility="collapsed",
-    placeholder="Bijv. kip, broccoli, rijst, eieren, tomaat, ui...",
-    help="Je kunt zoveel ingrediënten invullen als je zelf wilt!"
+# INGREDIËNTEN INVOER IN EEN PROFESSIONEEL KADER
+with st.container(border=True):
+    st.markdown("### 🥦 1. Wat ligt er nog in je koelkast?")
+    st.markdown("Typ alle ingrediënten die je wilt gebruiken, gescheiden door een komma:")
+    ingredienten = st.text_area(
+        label="Ingrediënten invoerveld",
+        label_visibility="collapsed",
+        placeholder="Bijv. kip, broccoli, rijst, eieren, tomaat, ui...",
+        help="Je kunt zoveel ingrediënten invullen als je zelf wilt!"
 )
 
 st.markdown(" ") 
 
-# EXTRA WENSEN
-st.markdown("### 🥕 2. Heb je specifieke extra wensen? (Optioneel)")
-st.markdown("Vul hier je persoonlijke voorkeuren in:")
-extra_wensen = st.text_input(
-    label="Extra wensen invoerveld",
-    label_visibility="collapsed",
-    placeholder="Bijv. binnen 15 minuten, vegetarisch, koolhydraatarm, extra eiwit"
-)
+# EXTRA WENSEN IN EEN PROFESSIONEEL KADER
+with st.container(border=True):
+    st.markdown("### 🥕 2. Heb je specifieke extra wensen? (Optioneel)")
+    st.markdown("Vul hier je persoonlijke voorkeuren in:")
+    extra_wensen = st.text_input(
+        label="Extra wensen invoerveld",
+        label_visibility="collapsed",
+        placeholder="Bijv. binnen 15 minuten, vegetarisch, koolhydraatarm, extra eiwit"
+    )
 
 st.markdown("---")
 
