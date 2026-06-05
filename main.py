@@ -2,22 +2,19 @@ import streamlit as st
 from openai import OpenAI
 from datetime import datetime
 import os
+import banner
 
-# AUTOMATISCHE KLEURENMAKER: Olijfgeel, zachtgroene vlakken en kookboeklettertype
+# AUTOMATISCHE KLEURENMAKER
 if not os.path.exists(".streamlit"):
     os.makedirs(".streamlit")
 with open(".streamlit/config.toml", "w") as f:
     f.write("[theme]\nprimaryColor = '#557a5e'\nbackgroundColor = '#f4f5e9'\nsecondaryBackgroundColor = '#e9ebd7'\ntextColor = '#213326'\nfont = 'serif'\n")
 
-# 1. STRUCTUUR VAN DE APP (100% VEILIG VOOR PYTHON 3.14)
+# 1. STRUCTUUR VAN DE APP
 st.set_page_config(page_title="Gezonde Restjes Chef", layout="centered")
 
-# 2. SFEERVOLLE GETEKENDE KLAREN BANNER (AQUAREL MARKT / GROENTEN)
-st.image(
-    "https://unsplash.com", 
-    caption="Welkom bij jouw eigen Gezonde Restjes Chef! 🥦🥕",
-    use_container_width=True
-)
+# 2. SFEERVOLLE GETEKENDE BANNER UIT EIGEN MAP
+banner.toon_banner()
 
 # 3. HEADER
 st.title("🥬 Gezonde Restjes Chef")
@@ -25,7 +22,7 @@ st.title("🥬 Gezonde Restjes Chef")
 st.success("""
     ✨ **Welkom in de gezellige keuken!** 👋
     
-    Gooi die lekkere restjes uit je koelkast nu niet weg! Typ hieronder in what je nog hebt liggen. 
+    Gooi die lekkere restjes uit je koelkast nu niet weg! Typ hieronder in wat je nog hebt liggen. 
     Jouw persoonlijke **Restjes Chef** bedenkt speciaal voor jou een super gezond, voedzaam en lekker recept. 
     Samen gaan we voedselverspilling tegen én eten we heerlijk gezond!
 """)
@@ -112,7 +109,6 @@ if st.button("🔥 Heb je alle ingrediënten ingevuld? Klik dan hier voor je rec
                 )
                 
                 recept = response.choices.pop(0).message.content
-                
                 st.session_state.teller += 1
                 
                 st.success("Smakelijk eten! Hier is je persoonlijke en gezonde recept:")
