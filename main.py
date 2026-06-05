@@ -106,11 +106,11 @@ if st.button("🔥 Heb je alle ingrediënten ingevuld? Klik dan hier voor je rec
                 
                 recept = response.choices.pop(0).message.content
                 
+                # Sla de teller op ZONDER de pagina geforceerd te herstarten
+                st.session_state.teller += 1
+                
                 st.success("Smakelijk eten! Hier is je persoonlijke en gezonde recept:")
                 st.markdown(recept)
-                
-                st.session_state.teller += 1
-                st.rerun()
                 
             except Exception as e:
                 st.error(f"Fout bij het ophalen van het recept: {e}")
