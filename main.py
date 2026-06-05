@@ -2,22 +2,21 @@ import streamlit as st
 from openai import OpenAI
 from datetime import datetime
 import os
-import banner
 
-# AUTOMATISCHE KLEURENMAKER
+# AUTOMATISCHE KLEURENMAKER: Volledig geharmoniseerd palet (zacht olijfgeel en crème)
 if not os.path.exists(".streamlit"):
     os.makedirs(".streamlit")
 with open(".streamlit/config.toml", "w") as f:
     f.write("[theme]\nprimaryColor = '#557a5e'\nbackgroundColor = '#f4f5e9'\nsecondaryBackgroundColor = '#e9ebd7'\ntextColor = '#213326'\nfont = 'serif'\n")
 
-# 1. STRUCTUUR VAN DE APP
+# 1. STRUCTUUR VAN DE APP (100% VEILIG VOOR PYTHON 3.14)
 st.set_page_config(page_title="Gezonde Restjes Chef", layout="centered")
 
-# 2. SFEERVOLLE GETEKENDE BANNER UIT EIGEN MAP
-banner.toon_banner()
-
-# 3. HEADER
-st.title("🥬 Gezonde Restjes Chef")
+# 2. SFEERVOLLE VISUELE INTRODUCTIE (COZY KOOKBOEK INDELING)
+st.write("---")
+st.markdown("## 🧑‍🍳 📔 JOUW PERSOONLIJKE RECEPTENBOEK")
+st.markdown("### 🥦 🌽 🍅 *Vers van de groenteafdeling in jouw keuken!* 🌶️ 🧅 🍋")
+st.write("---")
 
 st.success("""
     ✨ **Welkom in de gezellige keuken!** 👋
@@ -59,7 +58,7 @@ if st.session_state.teller >= 5 and st.session_state.donatie_gesloten_maand != h
 st.markdown("---")
 
 # INGREDIËNTEN INVOER
-st.markdown("### 🥦 🥕 1. Wat ligt er nog in je koelkast?")
+st.markdown("### 🥑 1. Wat ligt er nog in je koelkast?")
 st.markdown("**Typ alle ingrediënten die je wilt gebruiken, gescheiden door een komma:** 🍅 🧅")
 ingredienten = st.text_area(
     label="Ingrediënten invoerveld",
@@ -81,7 +80,7 @@ extra_wensen = st.text_input(
 
 st.markdown("---")
 
-# 4. VERBETERDE SCHERMBREDE PROMINENTE KNOP
+# 3. VERBETERDE SCHERMBREDE PROMINENTE KNOP
 st.markdown("### 🍳 🌿 🍲 🌶️ 👨‍🍳 Recept samenstellen")
 if st.button("🔥 Heb je alle ingrediënten ingevuld? Klik dan hier voor je recept! 🍳 🔥", use_container_width=True, type="primary"):
     if not ingredienten:
