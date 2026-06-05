@@ -54,7 +54,7 @@ if st.session_state.teller >= 5 and st.session_state.donatie_gesloten_maand != h
 
 st.markdown("---")
 
-# INGREDIËNTEN INVOER (Nu met extra grote, duidelijke en perfect gekleurde kopteksten)
+# INGREDIËNTEN INVOER
 st.markdown("### 🥦 🥕 1. Wat ligt er nog in je koelkast?")
 st.markdown("**Typ alle ingrediënten die je wilt gebruiken, gescheiden door een komma:** 🍅 🧅")
 ingredienten = st.text_area(
@@ -64,7 +64,7 @@ ingredienten = st.text_area(
     help="Je kunt zoveel ingrediënten invullen als je zelf wilt!"
 )
 
-st.markdown(" ") # Witruimte
+st.markdown(" ") 
 
 # EXTRA WENSEN
 st.markdown("### 🍲 🔪 2. Heb je specifieke extra wensen? (Optioneel)")
@@ -88,14 +88,14 @@ if st.button("🔥 Heb je alle ingrediënten ingevuld? Klik dan hier voor je rec
                 api_key = st.secrets["OPENAI_API_KEY"]
                 client = OpenAI(api_key=api_key)
                 
-        prompt = (
+                prompt = (
                     f"Bedenk als de persoonlijke 'Restjes Chef' een zo gezond mogelijk en logisch recept met deze ingrediënten: {ingredienten}. "
                     f"Extra wensen van de gebruiker: {extra_wensen}. "
                     f"Geef het recept een duidelijke titel, bereidingstijd, ingrediëntenlijst met hoeveelheden en een stappenplan. "
                     f"Belangrijk: Voeg aan het begin een korte alinea toe met de titel 'Waarom dit gerecht super gezond is:' "
                     f"waarin je specifiek benadrukt waarom deze combinatie heel voedzaam en gezond is voor het lichaam."
                 )
-
+                
                 response = client.chat.completions.create(
                     model="gpt-4o-mini",
                     messages=[
