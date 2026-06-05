@@ -88,7 +88,7 @@ if st.button("🔥 Heb je alle ingrediënten ingevuld? Klik dan hier voor je rec
                 api_key = st.secrets["OPENAI_API_KEY"]
                 client = OpenAI(api_key=api_key)
                 
-                                prompt = (
+        prompt = (
                     f"Bedenk als de persoonlijke 'Restjes Chef' een zo gezond mogelijk en logisch recept met deze ingrediënten: {ingredienten}. "
                     f"Extra wensen van de gebruiker: {extra_wensen}. "
                     f"Geef het recept een duidelijke titel, bereidingstijd, ingrediëntenlijst met hoeveelheden en een stappenplan. "
