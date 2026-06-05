@@ -3,23 +3,23 @@ from openai import OpenAI
 from datetime import datetime
 import os
 
-# AUTOMATISCHE KLEURENMAKER: Dwingt de server naar olijfgeel en zachtgroen
+# AUTOMATISCHE KLEURENMAKER & COOKBOOK LETTERTYPE (serif)
 if not os.path.exists(".streamlit"):
     os.makedirs(".streamlit")
 with open(".streamlit/config.toml", "w") as f:
-    f.write("[theme]\nprimaryColor = '#557a5e'\nbackgroundColor = '#f1f2e4'\nsecondaryBackgroundColor = '#e1ebd5'\ntextColor = '#213326'\nfont = 'sans serif'\n")
+    f.write("[theme]\nprimaryColor = '#557a5e'\nbackgroundColor = '#f1f2e4'\nsecondaryBackgroundColor = '#e1ebd5'\ntextColor = '#213326'\nfont = 'serif'\n")
 
-# 1. STRUCTUUR VAN DE APP (100% VEILIG VOOR PYTHON 3.14)
+# 1. STRUCTUUR VAN DE APP 
 st.set_page_config(page_title="Gezonde Restjes Chef", layout="centered")
 
-# 2. SFEERVOLLE HEADER
+# 2. SFEERVOLLE HEADER (PERSOONLIJK GEMAAKT)
 st.title("🥬 Gezonde Restjes Chef")
 
 st.success("""
     ✨ **Welkom in de gezellige keuken!** 👋
     
     Gooi die lekkere restjes uit je koelkast niet weg! Typ hieronder in wat je nog hebt liggen. 
-    Mijn slimme AI-Chef bedenkt speciaal voor jou een super gezond, voedzaam en gezond recept. 
+    Jouw persoonlijke **Restjes Chef** bedenkt speciaal voor jou een super gezond, voedzaam en lekker recept. 
     Samen gaan we voedselverspilling tegen én eten we heerlijk gezond!
 """)
 
@@ -35,7 +35,7 @@ huidige_maand = datetime.now().strftime("%B %Y")
 if st.session_state.teller >= 5 and st.session_state.donatie_gesloten_maand != huidige_maand:
     st.warning(f"❤️ **Maandelijkse Donatie Oproep ({huidige_maand}):**  \n"
                "Super dat je de app zo actief gebruikt! Je hebt deze maand al meer dan 5 gezonde recepten gegenereerd. "
-               "Omdat de AI-chef per klik geld kost, vraag ik actieve gebruikers om één keer per maand "
+               "Omdat de Restjes Chef per klik kleine serverkosten maakt, vraag ik actieve gebruikers om één keer per maand "
                "een vrijblijvende donatie te doen om deze app gratis en zonder reclame online te houden. "
                "Kies hieronder een bedrag dat bij je past. Super bedankt voor je steun! 🙏")
     
@@ -54,15 +54,16 @@ if st.session_state.teller >= 5 and st.session_state.donatie_gesloten_maand != h
 
 st.markdown("---")
 
-# INGREDIËNTEN INVOER
-st.markdown("### 🥑 1. Wat ligt er nog in je koelkast?")
+# INGREDIËNTEN INVOER MET GROENTEN RONDOM
+st.markdown("### 🥦 🥕 1. Wat ligt er nog in je koelkast? 🍅 🧅")
 ingredienten = st.text_area(
     "Typ alle ingrediënten die je wilt gebruiken, gescheiden door een komma:",
     placeholder="Bijv. kip, broccoli, rijst, eieren, tomaat, ui...",
     help="Je kunt zoveel ingrediënten invullen als je zelf wilt!"
 )
 
-st.markdown("### 📝 2. Extra wensen (Optioneel)")
+# EXTRA WENSEN MET CULINAIR ICOON (POT MET POLLEPEL)
+st.markdown("### 🍲 🔪 2. Extra wensen? (Optioneel) 🍋 🌿")
 extra_wensen = st.text_input(
     "Heb je specifieke voorkeuren?", 
     placeholder="Bijv. binnen 15 minuten, vegetarisch, koolhydraatarm, extra eiwit"
@@ -76,13 +77,14 @@ if st.button("🔥 🧑‍🍳 LAAT GEZONDE RESTJES CHEF NU JOUW RECEPT BEDENKEN
     if not ingredienten:
         st.warning("Vul eerst je ingrediënten in! Voeg meerdere producten toe gescheiden door een komma.")
     else:
-        with st.spinner("De chef-kok berekent de meest gezonde combinatie... 🍲"):
+        with st.spinner("De Restjes Chef berekent de meest gezonde combinatie... 🍲"):
             try:
                 api_key = st.secrets["OPENAI_API_KEY"]
                 client = OpenAI(api_key=api_key)
                 
+                # Hier vertellen we de AI ook dat hij spreekt als de 'Restjes Chef'
                 prompt = (
-                    f"Bedenk een zo gezond mogelijk en logisch recept met deze ingrediënten: {ingredienten}. "
+                    f"Bedenk als de persoonlijke 'Restjes Chef' een zo gezond mogelijk en logisch recept met deze ingrediënten: {ingredienten}. "
                     f"Extra wensen van de gebruiker: {extra_wensen}. "
                     f"Geef het recept een duidelijke titel, bereidingstijd, ingrediëntenlijst met hoeveelheden en een stappenplan. "
                     f"Belangrijk: Voeg aan het begin een korte alinea toe met de titel 'Waarom dit gerecht super gezond is:' "
@@ -91,7 +93,7 @@ if st.button("🔥 🧑‍🍳 LAAT GEZONDE RESTJES CHEF NU JOUW RECEPT BEDENKEN
                 response = client.chat.completions.create(
                     model="gpt-4o-mini",
                     messages=[
-                        {"role": "system", "content": "Je bent een professionele restjes-chef network voedingsdeskundige. Je focust altijd op maximale gezondheid. Antwoord altijd in het Nederlands."},
+                        {"role": "system", "content": "Je bent de persoonlijke Restjes Chef en een ervaren voedingsdeskundige. Je focust altijd op maximale gezondheid. Antwoord altijd in het Nederlands."},
                         {"role": "user", "content": prompt}
                     ]
                 )
