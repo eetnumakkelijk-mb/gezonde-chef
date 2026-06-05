@@ -3,14 +3,27 @@ from openai import OpenAI
 from datetime import datetime
 import os
 
-# AUTOMATISCHE KLEURENMAKER: Dwingt de server naar een nóg warmere ambiance
+# AUTOMATISCHE KLEURENMAKER: Dwingt de server naar olijfgeel en zachtgroen
 if not os.path.exists(".streamlit"):
     os.makedirs(".streamlit")
 with open(".streamlit/config.toml", "w") as f:
-    f.write("[theme]\nprimaryColor = '#d96b43'\nbackgroundColor = '#f5efe6'\nsecondaryBackgroundColor = '#e6dfd5'\ntextColor = '#2b231f'\nfont = 'sans serif'\n")
+    f.write("[theme]\nprimaryColor = '#557a5e'\nbackgroundColor = '#f1f2e4'\nsecondaryBackgroundColor = '#e1ebd5'\ntextColor = '#213326'\nfont = 'sans serif'\n")
 
-# 1. STRUCTUUR VAN DE APP
+# 1. STRUCTUUR EN EXTRA RONDING VOOR DE KNOP (PIZZA-STIJL)
 st.set_page_config(page_title="Gezonde Restjes Chef", layout="centered")
+
+# Onzichtbare code om de knop extra rond te maken en de invoervakken groen te kleuren
+st.markdown("""
+    <style>
+        div.stButton > button:first-child {
+            border-radius: 30px !important;
+            padding: 15px 30px !important;
+            font-size: 16px !important;
+            font-weight: bold !important;
+            border: none !important;
+        }
+    </style>
+""", unsafe_with_html=True)
 
 # 2. SFEERVOLLE HEADER
 st.title("🥬 Gezonde Restjes Chef")
@@ -70,9 +83,9 @@ extra_wensen = st.text_input(
 
 st.markdown("---")
 
-# 3. EXTRA MACHTIGE & OPVALLENDE GENERATOR KNOP
+# 3. VERBETERDE SCHERMBREDE RONDE KNOP
 st.markdown("### 👨‍🍳 Recept samenstellen")
-if st.button("🔥  🧑‍🍳  LAAT DE AI-CHEF NU JOUW RECEPT BEDENKEN!  🍲  🔥", use_container_width=True):
+if st.button("🔥 🧑‍🍳 LAAT GEZONDE RESTJES CHEF NU JOUW RECEPT BEDENKEN! 🍲 🔥", use_container_width=True):
     if not ingredienten:
         st.warning("Vul eerst je ingrediënten in! Voeg meerdere producten toe gescheiden door een komma.")
     else:
