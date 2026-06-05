@@ -3,11 +3,11 @@ from openai import OpenAI
 from datetime import datetime
 import os
 
-# AUTOMATISCHE KLEURENMAKER: Dit maakt het bestand .streamlit/config.toml voor je aan op de server!
+# AUTOMATISCHE KLEURENMAKER: Dit dwingt de server om ALLES warm te kleuren!
 if not os.path.exists(".streamlit"):
     os.makedirs(".streamlit")
 with open(".streamlit/config.toml", "w") as f:
-    f.write("[theme]\nprimaryColor = '#4a7c59'\nbackgroundColor = '#f7f9f6'\nsecondaryBackgroundColor = '#e8f0ea'\ntextColor = '#2c4c38'\nfont = 'sans serif'\n")
+    f.write("[theme]\nprimaryColor = '#4a7c59'\nbackgroundColor = '#f4f1ea'\nsecondaryBackgroundColor = '#e6ebd4'\ntextColor = '#1e3325'\nfont = 'sans serif'\n")
 
 # 1. STRUCTUUR VAN DE APP
 st.set_page_config(page_title="Gezonde Restjes Chef", layout="centered")
