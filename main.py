@@ -3,7 +3,7 @@ from openai import OpenAI
 from datetime import datetime
 import os
 
-# AUTOMATISCHE KLEURENMAKER: Volledig geharmoniseerd palet (zacht olijfgeel en crème)
+# AUTOMATISCHE KLEURENMAKER: Olijfgeel, zachtgroene vlakken en kookboeklettertype
 if not os.path.exists(".streamlit"):
     os.makedirs(".streamlit")
 with open(".streamlit/config.toml", "w") as f:
@@ -12,7 +12,7 @@ with open(".streamlit/config.toml", "w") as f:
 # 1. STRUCTUUR VAN DE APP (100% VEILIG VOOR PYTHON 3.14)
 st.set_page_config(page_title="Gezonde Restjes Chef", layout="centered")
 
-# 2. SFEERVOLLE VISUELE INTRODUCTIE (COZY KOOKBOEK INDELING)
+# 2. SFEERVOLLE VISUELE INTRODUCTIE
 st.write("---")
 st.markdown("## 🧑‍🍳 📔 JOUW PERSOONLIJKE RECEPTENBOEK")
 st.markdown("### 🥦 🌽 🍅 *Vers van de groenteafdeling in jouw keuken!* 🌶️ 🧅 🍋")
@@ -21,9 +21,8 @@ st.write("---")
 st.success("""
     ✨ **Welkom in de gezellige keuken!** 👋
     
-    Gooi die lekkere restjes uit je koelkast nu niet weg! Typ hieronder in wat je nog hebt liggen. 
-    Jouw persoonlijke **Restjes Chef** bedenkt speciaal voor jou een super gezond, voedzaam en lekker recept. 
-    Samen gaan we voedselverspilling tegen én eten we heerlijk gezond!
+    Jouw persoonlijke **Restjes Chef** helpt je om heerlijk en gezond te koken. 
+    Kies hieronder of je wilt koken met restjes uit je koelkast, of dat je samen met de chef een gloednieuw gezond gerecht wilt samenstellen!
 """)
 
 # INITIALISATIE: We tellen het aantal gegenereerde recepten
@@ -57,61 +56,97 @@ if st.session_state.teller >= 5 and st.session_state.donatie_gesloten_maand != h
 
 st.markdown("---")
 
-# INGREDIËNTEN INVOER
-st.markdown("### 🥑 1. Wat ligt er nog in je koelkast?")
-st.markdown("**Typ alle ingrediënten die je wilt gebruiken, gescheiden door een komma:** 🍅 🧅")
-ingredienten = st.text_area(
-    label="Ingrediënten invoerveld",
-    label_visibility="collapsed",
-    placeholder="Bijv. kip, broccoli, rijst, eieren, tomaat, ui...",
-    help="Je kunt zoveel ingrediënten invullen als je zelf wilt!"
-)
+# 3. KIES JE KOOKSTIJL (TABBLADEN)
+tab1, tab2 = st.tabs(["🗑️ Koken met Restjes", "✨ Nieuw Gerecht Samenstellen"])
 
-st.markdown(" ") 
+with tab1:
+    st.markdown("### 🥑 1. Wat ligt er nog in je koelkast?")
+    st.markdown("**Typ alle ingrediënten die je op wilt maken, gescheiden door een komma:**")
+    ingredienten = st.text_area(
+        label="Restjes invoer",
+        label_visibility="collapsed",
+        placeholder="Bijv. kip, broccoli, eieren, oude kaas, ui, tomaat...",
+        key="restjes_invoer"
+    )
+    
+    st.markdown("### 🍲 2. Extra wensen? (Optioneel)")
+    extra_wensen_1 = st.text_input(
+        label="Wensen restjes",
+        label_visibility="collapsed",
+        placeholder="Bijv. binnen 15 minuten, vegetarisch, koolhydraatarm",
+        key="wensen_restjes"
+    )
+    mode = "restjes"
 
-# EXTRA WENSEN
-st.markdown("### 🍲 🔪 2. Heb je specifieke extra wensen? (Optioneel)")
-st.markdown("**Vul hier je persoonlijke voorkeuren in:** 🍋 🌿")
-extra_wensen = st.text_input(
-    label="Extra wensen invoerveld",
-    label_visibility="collapsed",
-    placeholder="Bijv. binnen 15 minuten, vegetarisch, koolhydraatarm, extra eiwit"
-)
+with tab2:
+    st.markdown("### 🍝 1. Kies je basis voor het nieuwe gerecht")
+    basis_keuze = st.selectbox(
+        "Wat voor soort maaltijd wil je maken?",
+        ["Gezonde Volkoren Pasta", "Zilvervliesrijst / Quinoa Schotel", "Gevulde Volkoren Wrap", "Frisse Maaltijdsalade", "Warme Ovenschotel", "Slanke Soep / Stoofpot"]
+    )
+    
+    st.markdown("### 🥩 🥕 2. Voeg extra ingrediënten toe die je lekker vindt")
+    st.markdown("**Typ hier wat je er sowieso in wilt hebben (gescheiden door een komma):**")
+    extra_ingredienten = st.text_area(
+        label="Nieuw gerecht invoer",
+        label_visibility="collapsed",
+        placeholder="Bijv. zalm, spinazie, courgette, feta, avocado, pijnboompitten...",
+        key="nieuw_invoer"
+    )
+    
+    st.markdown("### 🍋 3. Extra wensen? (Optioneel)")
+    extra_wensen_2 = st.text_input(
+        label="Wensen nieuw",
+        label_visibility="collapsed",
+        placeholder="Bijv. extra eiwit, pittig, kindvriendelijk",
+        key="wensen_nieuw"
+    )
+    mode = "nieuw"
 
 st.markdown("---")
 
-# 3. VERBETERDE SCHERMBREDE PROMINENTE KNOP
+# 4. DE GENERATOR KNOP
 st.markdown("### 🍳 🌿 🍲 🌶️ 👨‍🍳 Recept samenstellen")
-if st.button("🔥 Heb je alle ingrediënten ingevuld? Klik dan hier voor je recept! 🍳 🔥", use_container_width=True, type="primary"):
-    if not ingredienten:
-        st.warning("Vul eerst je ingrediënten in! Voeg meerdere producten toe gescheiden door een komma.")
+if st.button("🔥 Heb je alles ingevuld? Klik dan hier voor je recept! 🍳 🔥", use_container_width=True, type="primary"):
+    
+    # Bepaal de prompt op basis van de gekozen tab
+    if mode == "restjes":
+        if not ingredienten:
+            st.warning("Vul eerst de restjes uit je koelkast in!")
+            st.stop()
+        prompt = (
+            f"Bedenk als de persoonlijke 'Restjes Chef' een zo gezond mogelijk en logisch recept met deze koelkast-restjes: {ingredienten}. "
+            f"Extra wensen: {extra_wensen_1}. "
+            f"Het hoofddoel is voedselverspilling tegengaan. Geef het recept een duidelijke titel, bereidingstijd, ingrediëntenlijst met hoeveelheden en een stappenplan. "
+            f"Voeg aan het begin een alinea toe met de titel 'Waarom dit gerecht super gezond is:'."
+        )
     else:
-        with st.spinner("De Restjes Chef berekent de meest gezonde combinatie... 🍲"):
-            try:
-                api_key = st.secrets["OPENAI_API_KEY"]
-                client = OpenAI(api_key=api_key)
-                
-                prompt = (
-                    f"Bedenk als de persoonlijke 'Restjes Chef' een zo gezond mogelijk en logisch recept met deze ingrediënten: {ingredienten}. "
-                    f"Extra wensen van de gebruiker: {extra_wensen}. "
-                    f"Geef het recept een duidelijke titel, bereidingstijd, ingrediëntenlijst met hoeveelheden en een stappenplan. "
-                    f"Belangrijk: Voeg aan het begin een korte alinea toe met de titel 'Waarom dit gerecht super gezond is:' "
-                    f"waarin je specifiek benadrukt waarom deze combinatie heel voedzaam en gezond is voor het lichaam."
-                )
-                
-                response = client.chat.completions.create(
-                    model="gpt-4o-mini",
-                    messages=[
-                        {"role": "system", "content": "Je bent de persoonlijke Restjes Chef en een ervaren voedingsdeskundige. Je focust altijd op maximale gezondheid. Antwoord altijd in het Nederlands."},
-                        {"role": "user", "content": prompt}
-                    ]
-                )
-                
-                recept = response.choices.pop(0).message.content
-                st.session_state.teller += 1
-                
-                st.success("Smakelijk eten! Hier is je persoonlijke en gezonde recept:")
-                st.markdown(recept)
-                
-            except Exception as e:
-                st.error(f"Fout bij het ophalen van het recept: {e}")
+        prompt = (
+            f"Bedenk als de persoonlijke 'Restjes Chef' een gloednieuw, zo gezond mogelijk recept met als basis '{basis_keuze}'. "
+            f"Voeg de volgende favoriete ingrediënten toe: {extra_ingredienten if extra_ingredienten else 'Chef kiest bijpassende gezonde groenten'}. "
+            f"Extra wensen: {extra_wensen_2}. "
+            f"Geef het recept een duidelijke titel, bereidingstijd, ingrediëntenlijst met hoeveelheden en een stappenplan. "
+            f"Voeg aan het begin een alinea toe met de titel 'Waarom dit gerecht super gezond is:'."
+        )
+
+    with st.spinner("De Restjes Chef berekent de meest gezonde combinatie... 🍲"):
+        try:
+            api_key = st.secrets["OPENAI_API_KEY"]
+            client = OpenAI(api_key=api_key)
+            
+            response = client.chat.completions.create(
+                model="gpt-4o-mini",
+                messages=[
+                    {"role": "system", "content": "Je bent de persoonlijke Restjes Chef en een ervaren voedingsdeskundige. Je focust altijd op maximale gezondheid. Antwoord altijd in het Nederlands."},
+                    {"role": "user", "content": prompt}
+                ]
+            )
+            
+            recept = response.choices.pop(0).message.content
+            st.session_state.teller += 1
+            
+            st.success("Smakelijk eten! Hier is je persoonlijke en gezonde recept:")
+            st.markdown(recept)
+            
+        except Exception as e:
+            st.error(f"Fout bij het ophalen van het recept: {e}")
