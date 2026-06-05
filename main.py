@@ -88,13 +88,14 @@ if st.button("🔥 Heb je alle ingrediënten ingevuld? Klik dan hier voor je rec
                 api_key = st.secrets["OPENAI_API_KEY"]
                 client = OpenAI(api_key=api_key)
                 
-                prompt = (
+                                prompt = (
                     f"Bedenk als de persoonlijke 'Restjes Chef' een zo gezond mogelijk en logisch recept met deze ingrediënten: {ingredienten}. "
                     f"Extra wensen van de gebruiker: {extra_wensen}. "
                     f"Geef het recept een duidelijke titel, bereidingstijd, ingrediëntenlijst met hoeveelheden en een stappenplan. "
                     f"Belangrijk: Voeg aan het begin een korte alinea toe met de titel 'Waarom dit gerecht super gezond is:' "
                     f"waarin je specifiek benadrukt waarom deze combinatie heel voedzaam en gezond is voor het lichaam."
                 )
+
                 response = client.chat.completions.create(
                     model="gpt-4o-mini",
                     messages=[
