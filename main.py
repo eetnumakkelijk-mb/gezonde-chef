@@ -3,7 +3,7 @@ from openai import OpenAI
 from datetime import datetime
 import os
 
-# AUTOMATISCHE KLEURENMAKER: Hoogwaardig kookboek-palet (diep donkergroen met olijf/crème)
+# AUTOMATISCHE KLEURENMAKER: Hoogwaardig kookboek-palet
 if not os.path.exists(".streamlit"):
     os.makedirs(".streamlit")
 with open(".streamlit/config.toml", "w") as f:
@@ -54,7 +54,7 @@ if st.session_state.teller >= 5 and st.session_state.donatie_gesloten_maand != h
 
 st.markdown("---")
 
-# INGREDIËNTEN INVOER IN EEN PROFESSIONEEL KADER
+# INGREDIËNTEN INVOER
 with st.container(border=True):
     st.markdown("### 🥦 1. Wat ligt er nog in je koelkast?")
     st.markdown("Typ alle ingrediënten die je wilt gebruiken, gescheiden door een komma:")
@@ -63,18 +63,18 @@ with st.container(border=True):
         label_visibility="collapsed",
         placeholder="Bijv. kip, broccoli, rijst, eieren, tomaat, ui...",
         help="Je kunt zoveel ingrediënten invullen als je zelf wilt!"
-)
+    )
 
 st.markdown(" ") 
 
-# EXTRA WENSEN IN EEN PROFESSIONEEL KADER
+# EXTRA WENSEN
 with st.container(border=True):
     st.markdown("### 🥕 2. Heb je specifieke extra wensen? (Optioneel)")
     st.markdown("Vul hier je persoonlijke voorkeuren in:")
     extra_wensen = st.text_input(
         label="Extra wensen invoerveld",
         label_visibility="collapsed",
-        placeholder="Bijv. binnen 15 minuten, vegetarisch, koolhydraatarm, extra eiwit"
+        placeholder="Bijv. binnen 15 minutes, vegetarisch, koolhydraatarm, extra eiwit"
     )
 
 st.markdown("---")
@@ -111,6 +111,13 @@ if st.button("🔥 Heb je alle ingrediënten ingevuld? Klik dan hier voor je rec
                 
                 st.success("Smakelijk eten! Hier is je persoonlijke en gezonde recept:")
                 st.markdown(recept)
+                
+                # SUBTIELE VERDIEN-KAART (Knaagt niet aan de sfeer, staat direct onder het recept)
+                st.markdown("---")
+                with st.container(border=True):
+                    st.markdown("### 🛒 Tip van de Restjes Chef")
+                    st.markdown("Heb je nog handige vershoudbakjes nodig om je restjes langer vers te houden, of zoek je een scherp kookmes? Bekijk direct de beste keukenhulpjes en bespaar nog meer!")
+                    st.link_button("🎁 Bekijk handige keukenhulpjes op Bol.com", "https://bol.com")
                 
             except Exception as e:
                 st.error(f"Fout bij het ophalen van het recept: {e}")
