@@ -3,7 +3,7 @@ from openai import OpenAI
 from datetime import datetime
 import os
 
-# AUTOMATISCHE KLEURENMAKER: Volledig geharmoniseerd palet (zacht olijfgeel en crème)
+# AUTOMATISCHE KLEURENMAKER: Olijfgeel, zachtgroene vlakken en kookboeklettertype
 if not os.path.exists(".streamlit"):
     os.makedirs(".streamlit")
 with open(".streamlit/config.toml", "w") as f:
@@ -12,13 +12,20 @@ with open(".streamlit/config.toml", "w") as f:
 # 1. STRUCTUUR VAN DE APP (100% VEILIG VOOR PYTHON 3.14)
 st.set_page_config(page_title="Gezonde Restjes Chef", layout="centered")
 
-# 2. SFEERVOLLE HEADER
+# 2. SFEERVOLLE GETEKENDE KLAREN BANNER (AQUAREL MARKT / GROENTEN)
+st.image(
+    "https://unsplash.com", 
+    caption="Welkom bij jouw eigen Gezonde Restjes Chef! 🥦🥕",
+    use_container_width=True
+)
+
+# 3. HEADER
 st.title("🥬 Gezonde Restjes Chef")
 
 st.success("""
     ✨ **Welkom in de gezellige keuken!** 👋
     
-    Gooi die lekkere restjes uit je koelkast nu niet weg! Typ hieronder in wat je nog hebt liggen. 
+    Gooi die lekkere restjes uit je koelkast nu niet weg! Typ hieronder in what je nog hebt liggen. 
     Jouw persoonlijke **Restjes Chef** bedenkt speciaal voor jou een super gezond, voedzaam en lekker recept. 
     Samen gaan we voedselverspilling tegen én eten we heerlijk gezond!
 """)
@@ -77,7 +84,7 @@ extra_wensen = st.text_input(
 
 st.markdown("---")
 
-# 3. VERBETERDE SCHERMBREDE PROMINENTE KNOP
+# 4. VERBETERDE SCHERMBREDE PROMINENTE KNOP
 st.markdown("### 🍳 🌿 🍲 🌶️ 👨‍🍳 Recept samenstellen")
 if st.button("🔥 Heb je alle ingrediënten ingevuld? Klik dan hier voor je recept! 🍳 🔥", use_container_width=True, type="primary"):
     if not ingredienten:
@@ -106,7 +113,6 @@ if st.button("🔥 Heb je alle ingrediënten ingevuld? Klik dan hier voor je rec
                 
                 recept = response.choices.pop(0).message.content
                 
-                # Sla de teller op ZONDER de pagina geforceerd te herstarten
                 st.session_state.teller += 1
                 
                 st.success("Smakelijk eten! Hier is je persoonlijke en gezonde recept:")
