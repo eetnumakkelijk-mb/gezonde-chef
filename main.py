@@ -9,22 +9,8 @@ if not os.path.exists(".streamlit"):
 with open(".streamlit/config.toml", "w") as f:
     f.write("[theme]\nprimaryColor = '#2c4c38'\nbackgroundColor = '#f4f5e9'\nsecondaryBackgroundColor = '#e4e8ce'\ntextColor = '#17261c'\nfont = 'serif'\n")
 
-# 1. GOOGLE TURBO-OPTIMALISATIE (SEO METADATA)
-# Deze termen zijn onzichtbaar voor de gebruiker, maar Google indexeert ze direct voor snelle hits!
-st.set_page_config(
-    page_title="Gezonde Restjes Chef - Recepten Maken Met Restjes & Koelkast Opmaken", 
-    page_icon="🥬",
-    layout="centered"
-)
-
-# Onzichtbare trefwoordenlijst voor de Google-zoekmachine
-st.markdown("""
-    <div style="display:none;">
-        recept restjes, koken met restjes, restjes verwerken, wat eten we vandaag, goedkoop koken, budget recepten, 
-        koelkast opmaken, voedselverspilling tegengaan, gezond recept generator, restjes groenten opmaken, 
-        recept met wat ik in huis heb, makkelijk gezond koken, kookboek restjes, iDEAL donatie kook app, bol.com keukenhulpjes
-    </div>
-""", unsafe_with_html=True)
+# 1. STRUCTUUR VAN DE APP (100% VEILIG VOOR PYTHON 3.14)
+st.set_page_config(page_title="Gezonde Restjes Chef", layout="centered")
 
 # 2. HEADER
 st.title("🥬 Gezonde Restjes Chef")
@@ -95,7 +81,7 @@ st.markdown("---")
 
 # 3. VERBETERDE PROMINENTE KNOP
 st.markdown("### 🍅 Recept samenstellen")
-if st.button("🔥 Heb je alle ingrediënten ingevuld? Klik dan hier voor je recept! 🍳 🔥", use_container_width=True, type="primary"):
+if st.button("🔥 Heb je alle ingrediëzen ingevuld? Klik dan hier voor je recept! 🍳 🔥", use_container_width=True, type="primary"):
     if not ingredienten:
         st.warning("Vul eerst je ingrediënten in! Voeg meerdere producten toe gescheiden door een komma.")
     else:
