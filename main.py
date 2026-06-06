@@ -81,7 +81,7 @@ st.markdown("---")
 
 # 3. VERBETERDE PROMINENTE KNOP
 st.markdown("### 🍅 Recept samenstellen")
-if st.button("🔥 Heb je alle ingrediëzen ingevuld? Klik dan hier voor je recept! 🍳 🔥", use_container_width=True, type="primary"):
+if st.button("🔥 Heb je alle ingrediënten ingevuld? Klik dan hier voor je recept! 🍳 🔥", use_container_width=True, type="primary"):
     if not ingredienten:
         st.warning("Vul eerst je ingrediënten in! Voeg meerdere producten toe gescheiden door een komma.")
     else:
