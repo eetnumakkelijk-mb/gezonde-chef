@@ -35,17 +35,19 @@ huidige_maand = datetime.now().strftime("%B %Y")
 if st.session_state.teller >= 5 and st.session_state.donatie_gesloten_maand != huidige_maand:
     st.warning(f"❤️ Maandelijkse Donatie Oproep ({huidige_maand}): \n"
                "Super dat je de app zo actief gebruikt! Je hebt deze maand al meer dan 5 gezonde recepten gegenereerd. "
-               "Omdat de Restjes Chef kleine serverkosten maakt, vraag ik actieve gebruikers om één keer per maand "
-               "een vrijblijvende donatie te doen om deze app gratis en zonder reclame online te houden. "
-               "Kies hieronder een bedrag dat bij je past. Super bedankt voor je steun! 🙏")
+               "Omdat de Restjes Chef kleine serverkosten maakt, vraag ik actieve gebruikers om een kleine, vrijblijvende bijdrage "
+               "om deze app volledig gratis en zonder reclame online te houden. Super bedankt voor je steun! 🙏")
+    
+    # Donatielink die jouw privacy beschermt
+    donatie_link = "https://buymeacoffee.com"
     
     col1, col2, col3 = st.columns(3)
     with col1:
-        st.link_button("☕ Doneer € 1,50", "https://buymeacoffee.com")
+        st.link_button("☕ Doneer € 1,50", donatie_link)
     with col2:
-        st.link_button("🍕 Doneer € 2,50", "https://buymeacoffee.com")
+        st.link_button("🍕 Doneer € 2,50", donatie_link)
     with col3:
-        st.link_button("👑 Doneer € 3,00", "https://buymeacoffee.com")
+        st.link_button("👑 Kies eigen bedrag", donatie_link)
     
     st.markdown(" ") 
     if st.button("❌ Gelezen, sluit melding voor deze maand"):
@@ -79,7 +81,7 @@ with st.container(border=True):
 
 st.markdown("---")
 
-# 3. VERBETERDE PROMINENTE KNOP
+# 3. PROMINENTE KNOP
 st.markdown("### 🍅 Recept samenstellen")
 if st.button("🔥 Heb je alle ingrediënten ingevuld? Klik dan hier voor je recept! 🍳 🔥", use_container_width=True, type="primary"):
     if not ingredienten:
@@ -93,7 +95,7 @@ if st.button("🔥 Heb je alle ingrediënten ingevuld? Klik dan hier voor je rec
                 prompt = (
                     f"Bedenk als de persoonlijke 'Restjes Chef' een zo gezond mogelijk en logisch recept met deze ingrediënten: {ingredienten}. "
                     f"Extra wensen van de gebruiker: {extra_wensen}. "
-                    f"Geef het recept een duidelijke titel, bereidingstijd, ingrediëntenlijst met hoeveelheden en een stappenplan. "
+                    f"Geef het recept een duidelijke titel, bereidingstijd, ingrediëntenlijst met hoeveelheden en un stappenplan. "
                     f"Belangrijk: Voeg aan het begin een korte alinea toe met de titel 'Waarom dit gerecht super gezond is:' "
                     f"waarin je specifiek benadrukt waarom deze combinatie heel voedzaam en gezond is voor het lichaam."
                 )
@@ -111,13 +113,6 @@ if st.button("🔥 Heb je alle ingrediënten ingevuld? Klik dan hier voor je rec
                 
                 st.success("Smakelijk eten! Hier is je persoonlijke en gezonde recept:")
                 st.markdown(recept)
-                
-                # SUBTIELE VERDIEN-KAART
-                st.markdown("---")
-                with st.container(border=True):
-                    st.markdown("### 🛒 Tip van de Restjes Chef")
-                    st.markdown("Heb je nog handige vershoudbakjes nodig om je restjes langer vers te houden, of zoek je een scherp kookmes? Bekijk direct de beste keukenhulpjes en bespaar nog meer!")
-                    st.link_button("🎁 Bekijk handige keukenhulpjes op Bol.com", "https://bol.com")
                 
             except Exception as e:
                 st.error(f"Fout bij het ophalen van het recept: {e}")
